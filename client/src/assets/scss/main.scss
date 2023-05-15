@@ -13,14 +13,12 @@
   tab-size: 4;
 }
 
-/* Set height of html and body to 100% */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-/* Game board container */
 .game-board {
   display: flex;
   flex-direction: column;
@@ -29,17 +27,15 @@ html, body {
   font-family: Arial, sans-serif;
   padding: 20px;
   width: 100%;
-  height: 100vh; /* Set height to 100vh to fill the entire viewport */
+  height: 100vh; 
 }
 
-/* Categories row styling */
 .categories-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-/* Category styling */
 .category {
   display: flex;
   flex-direction: column;
@@ -49,11 +45,10 @@ html, body {
   font-size: 16px;
   padding: 30px;
   background-color: #335fff;
-  border: 2px solid #ffffff; /* Add border styling */
-  flex: 1; /* Take up equal space */
+  border: 2px solid #ffffff;
+  flex: 1;
 }
 
-/* Styling for selected and answered categories */
 .category.selected {
   background-color: #1a1a1a;
 }
