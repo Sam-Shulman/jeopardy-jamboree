@@ -16,4 +16,15 @@ questionsRouter.get("/", async (req, res) => {
     }
 })
 
+questionsRouter.get("/:id", async (req, res) => {
+    const { id } = req.params
+    try {
+        const showQuestion = await Question.query().findById(id)
+        const serializedQuestion = await StationSerializer.getSummary(showQuestion)
+        return res.status(200).json({ question: serializedQuestion })
+    } catch (err) {
+        return res.status(500).json({ errors: err })
+    }
+})
+
 export default questionsRouter
