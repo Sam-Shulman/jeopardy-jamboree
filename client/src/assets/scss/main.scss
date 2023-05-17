@@ -22,31 +22,34 @@ html, body {
 .game-board {
   display: flex;
   flex-direction: column;
-  background-color: #f9f4f4;
-  color: #ffffff;
+  background-color: #fdfdfd;
+  color: #f1ebeb;
   font-family: Arial, sans-serif;
   padding: 20px;
   width: 100%;
-  height: 100vh; 
+  height: 720px; 
+  object-fit: fill;
 }
 
 .categories-row {
   display: flex;
-  justify-content: space-between;
   margin-bottom: 10px;
 }
 
 .category {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   font-weight: bold;
   font-size: 16px;
-  padding: 30px;
-  background-color: #335fff;
+  padding: 20px;
+  background-color: #1109eb;
   border: 2px solid #ffffff;
   flex: 1;
+  width: 233px;
+  height: 145px;
 }
 
 .category.selected {
@@ -56,6 +59,26 @@ html, body {
 .category.answered {
   background-color: #666666;
 }
+
+.question-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 105px;
+  width: 230px;
+  border: 1px solid #ccc;
+  background-color: #1109eb;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.question-column:hover {
+  background-color: #f8f4f4;
+  color: black;
+}
+
+
 
 
 
