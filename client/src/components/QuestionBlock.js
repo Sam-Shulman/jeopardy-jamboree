@@ -1,9 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
+import GuessForm from "./GuessForm";
+
 
 const QuestionBlock = (props) => {
-    return (
-        <h1>{props.location.state.questionText}</h1>
-    )
-}
 
-export default QuestionBlock
+  return (
+    <div className="whole-question-block">
+    <div className="question-block">
+      <h2 className="question-title">Question:</h2>
+      <p className="question-text">{props.location.state.questionText}</p>
+      <GuessForm correctAnswer= {props.location.state.answer}/>
+    </div>
+    </div>
+  );
+};
+
+export default QuestionBlock;
+
+

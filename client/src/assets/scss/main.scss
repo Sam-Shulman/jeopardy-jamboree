@@ -78,7 +78,31 @@ html, body {
   color: black;
 }
 
+.question-block {
+  background-color: #1109eb;
+  color: #f1ebeb;
+  font-family: Arial, sans-serif;
+  padding: 40px;
+  margin: 0 auto;
+  max-width: 800px;
+  text-align: center;
+}
 
+.question-title {
+  font-weight: bold;
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.question-text {
+  font-size: 36px;
+}
+
+.whole-question-block {
+  height: 720px;
+  width: 100%;
+  background-image: url(https://i.imgur.com/RWbnme2.jpeg);
+}
 
 
 
