@@ -29,7 +29,7 @@ const GameBoard = (props) => {
       <div className="categories-row">
       {categories.length > 0 &&
         categories.map((category) => (
-          <CategoryTile key={category.id} name={category.name}/>
+          <CategoryTile key={category.id} name={category.name} id={category.id}/>
         ))}
       </div>
     </div>

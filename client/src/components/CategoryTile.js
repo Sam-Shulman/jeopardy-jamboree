@@ -1,43 +1,64 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 const CategoryTile = (props) => {
-    const [question, setQuestion] = useState({
-        questionText: "",
-        difficulty: "",
-        answer: "",
-    })
+  const [category, setCategory] = useState({
+    name: "",
+    questions: []
+  });
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-    // const questionId = props.match.id
-    
-    // const getQuestion = async () => {
-    //     try{
-    //         const response = await fetch (`/api/v1/questions/${questionId}`)
-    //      if (!response.ok) {
-    //         const errorMessage = `${response.status} (${response.statusText})`
-    //         const error = new Error(errorMessage)
-    //         throw error
-    //       }
-    //       const body = await response.json()
-    //       setQuestion(body.question)
-    //      } catch (err) {
-    //         console.error(`Error in fetch: ${err.message}`)
-    //     }
-    // }
-    // useEffect(() => {
-    //     getQuestion()
-    //   }, [])
+  const getCategory = async () => {
+    const categoryId = props.id;
+    try {
+      const response = await fetch(`/api/v1/categories/${categoryId}`);
+      if (!response.ok) {
+        const errorMessage = `${response.status} (${response.statusText})`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const body = await response.json();
+      setCategory(body.category);
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`);
+    }
+  };
 
-    //   console.log(question)
+  useEffect(() => {
+    getCategory();
+  }, []);
+
+  const handleQuestionClick = (question) => {
+    setSelectedQuestion(question);
+    setShouldRedirect(true)
+  };
+
+  if (shouldRedirect) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/clue",
+          state: { questionText: selectedQuestion.questionText,
+          answer: selectedQuestion.answer }
+        }}
+        />
+    )
+  }
 
   return (
     <div className="category-tile">
-      <h3 className="category">{props.name}</h3>
+      <h3 className="category">{category.name}</h3>
       <div className="question-row">
-        <div className="question-column">$100</div>
-        <div className="question-column">$200</div>
-        <div className="question-column">$300</div>
-        <div className="question-column">$400</div>
-        <div className="question-column">$500</div>
+        {category.questions.map((question) => (
+          <div
+            className="question-column"
+            key={question.id}
+            onClick={() => handleQuestionClick(question)}
+          >
+            {`${question.difficulty}`}
+          </div>
+        ))}
       </div>
     </div>
   );
