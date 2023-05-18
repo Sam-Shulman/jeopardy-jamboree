@@ -8,7 +8,7 @@ const GuessForm = (props) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const isCorrect = userAnswer === props.correctAnswer;
+    const isCorrect = userAnswer.toLowerCase() === props.correctAnswer.toLowerCase();
     setIsAnswerCorrect(isCorrect);
   };
 

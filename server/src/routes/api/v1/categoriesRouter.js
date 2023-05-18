@@ -13,6 +13,7 @@ categoriesRouter.get("/", async (req, res) => {
             categories.map(async (category) => {
                 return await CategorySerializer.getSummary(category)
             })
+
         )
         return res.status(200).json({ categories: serializedCategories})
     } catch (err) {
@@ -30,7 +31,5 @@ categoriesRouter.get("/:id", async (req,res) => {
         return res.status(500).json({ errors: err })
     }
 })
-
-
 
 export default categoriesRouter
