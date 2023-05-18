@@ -32,7 +32,6 @@ html, body {
   background-image: url(https://www.jeopardy.com/modules/custom/j6/j6_game/images/bg-clue-d.jpg);
   background-position: 50% 0;
   opacity: .83;
-
 }
 
 .categories-row {
@@ -172,13 +171,13 @@ html, body {
 .next-button:hover {
   background-color: #faf5f5;
 }
+
 .top-bar {
   background-color: #1109eb;
   color: #0b0a0a;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
 }
 
 .top-bar-left {
@@ -188,6 +187,7 @@ html, body {
   background-color: #1109eb;
   color: #faf7f7;
 }
+
 .home-button{
   padding-left: 10px;
   padding-top: 17.5px;
@@ -195,7 +195,6 @@ html, body {
   color: #faf7f7;
   font-weight: 900;
   background-color: #1109eb
-
 }
 .menu-text{
   padding-left: 10px;
@@ -205,4 +204,3 @@ html, body {
   font-weight: 900;
   background-color: #1109eb
 }
-

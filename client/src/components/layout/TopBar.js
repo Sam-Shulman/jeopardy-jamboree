@@ -38,4 +38,3 @@ const TopBar = ({ user }) => {
 };
 
 export default TopBar;
-

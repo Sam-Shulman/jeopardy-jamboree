@@ -10,5 +10,3 @@ class QuestionSerializer {
 }
 
 export default QuestionSerializer;
-
-
