@@ -101,13 +101,69 @@ html, body {
 .whole-question-block {
   height: 720px;
   width: 100%;
-  background-image: url(https://i.imgur.com/RWbnme2.jpeg);
+  background-image: url(https://www.jeopardy.com/modules/custom/j6/j6_game/images/bg-clue-d.jpg);
 }
 
+.guess-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  text-align: center;
+}
 
+.guess-input {
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 300px;
+  font-size: 18px;
+}
 
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #e8ecee;
+  color: #090808;
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+}
 
+.submit-button:hover {
+  background-color: #faf5f5;
+}
 
+.answer-status {
+  margin-top: 20px;
+  text-align: center;
+}
 
+.correct-answer {
+  color: green;
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.incorrect-answer {
+  color: red;
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.next-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f3f3f9;
+  color: #0f0f0f;
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.next-button:hover {
+  background-color: #faf5f5;
+}
 
 
