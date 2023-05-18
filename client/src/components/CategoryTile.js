@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 const CategoryTile = (props) => {
   const [category, setCategory] = useState({
     name: "",
-    questions: []
+    questions: [],
   });
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -19,7 +19,11 @@ const CategoryTile = (props) => {
         throw error;
       }
       const body = await response.json();
-      setCategory(body.category);
+      const sortedQuestions = body.category.questions.sort((a, b) => {
+        const difficultyOrder = { easy: 1, medium: 2, hard: 3 };
+        return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty];
+      });
+      setCategory({ ...body.category, questions: sortedQuestions });
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
@@ -31,7 +35,7 @@ const CategoryTile = (props) => {
 
   const handleQuestionClick = (question) => {
     setSelectedQuestion(question);
-    setShouldRedirect(true)
+    setShouldRedirect(true);
   };
 
   if (shouldRedirect) {
@@ -39,12 +43,14 @@ const CategoryTile = (props) => {
       <Redirect
         to={{
           pathname: "/clue",
-          state: { questionText: selectedQuestion.questionText,
-          answer: selectedQuestion.answer,
-          difficulty: selectedQuestion.difficulty }
+          state: {
+            questionText: selectedQuestion.questionText,
+            answer: selectedQuestion.answer,
+            difficulty: selectedQuestion.difficulty,
+          },
         }}
-        />
-    )
+      />
+    );
   }
 
   return (
