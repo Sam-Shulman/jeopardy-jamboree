@@ -40,7 +40,8 @@ const CategoryTile = (props) => {
         to={{
           pathname: "/clue",
           state: { questionText: selectedQuestion.questionText,
-          answer: selectedQuestion.answer }
+          answer: selectedQuestion.answer,
+          difficulty: selectedQuestion.difficulty }
         }}
         />
     )
