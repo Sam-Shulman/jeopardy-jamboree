@@ -16,5 +16,3 @@ const QuestionBlock = (props) => {
 };
 
 export default QuestionBlock;
-
-
