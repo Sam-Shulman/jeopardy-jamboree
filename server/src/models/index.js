@@ -2,5 +2,7 @@
 const User = require("./User.js")
 const Category = require("./Category.js")
 const Question = require("./Question.js")
+const Game = require("./Game.js")
+const GameCategory = require("./GameCategory.js")
 
-module.exports = {User, Category, Question};
+module.exports = {User, Category, Question, Game, GameCategory};

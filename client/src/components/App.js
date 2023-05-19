@@ -32,11 +32,11 @@ const App = (props) => {
         <Route exact path="/">
           <h2>Hello from react</h2>
         </Route>
-        <Redirect exact from="/" to="/game"/>
+        <Redirect exact from="/" to="/games"/>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/game" component={GameBoard}/>
-        <Route exact path="/clue" component={QuestionBlock}/>
+        <Route exact path="/games/:id/questions/:id" component={QuestionBlock}/>
+        <Route exact path="/games/:id" component={GameBoard}/>
       </Switch>
     </Router>
   );

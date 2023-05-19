@@ -7,8 +7,11 @@ class CategorySerializer {
             serializedCategory[attribute] = category[attribute]
         }
         const relatedQuestions = await category.$relatedQuery("questions")
-        const serializedQuestions = relatedQuestions.map((question) => 
-        QuestionSerializer.getSummary(question))
+        const serializedQuestions = await Promise.all(
+            relatedQuestions.map((question) => {
+                return  QuestionSerializer.getSummary(question)
+            })
+        )
         serializedCategory.questions = serializedQuestions
         return serializedCategory
     }
