@@ -14,7 +14,7 @@ class Category extends Model {
         }
     }
     static get relationMappings() {
-        const { Question } = require("./index.js")
+        const { Question, Game, GameCategory } = require("./index.js")
         return {
             questions: {
                 relation: Model.HasManyRelation,
@@ -23,10 +23,29 @@ class Category extends Model {
                     from: "categories.id",
                     to: "questions.categoryId"
                 }
+            },
+            games: {
+                relation: Model.ManyToManyRelation,
+                modelClass: Game,
+                join: {
+                    from: "categories.id",
+                    through: {
+                        from: "gameCategories.categoryId",
+                        to: "gameCategories.gameId"
+                    },
+                    to: "games.id"
+                }
+            },
+            gameCategories: {
+                relation: Model.HasManyRelation,
+                modelClass: GameCategory,
+                join: {
+                    from: "categories.id",
+                    to: "gameCategories.categoryId"
             }
         }
     }
-
+}
 }
 
 module.exports = Category
