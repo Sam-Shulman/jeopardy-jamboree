@@ -17,7 +17,7 @@ class Question extends Model {
         }
     }
     static get relationMappings() {
-        const { Category } = require("./index.js")
+        const { Category, UserQuestion, User } = require("./index.js")
         return {
             category: {
                 relation: Model.BelongsToOneRelation,
@@ -25,6 +25,26 @@ class Question extends Model {
                 join: {
                     from: "questions.categoryId",
                     to: "categories.id"
+                }
+            },
+            userQuestions: {
+                relation: Model.HasManyRelation,
+                modelClass: UserQuestion,
+                join: {
+                    from: "questions.id",
+                    to: "userQuestion.questionId"
+                }
+            },
+            users: {
+                relation: Model.ManyToManyRelation,
+                modelClass: User,
+                join: {
+                    from: "questions.id",
+                    through: {
+                        from: "userQuestion.questionId",
+                        to: "userQuestion.userId"
+                    },
+                    to: "users.id"
                 }
             }
         }
