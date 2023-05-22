@@ -6,9 +6,10 @@ const GameBoard = (props) => {
   const [game, setGame] = useState({
     score: "",
     userId: "",
-    categories: []
+    categories: [],
+    id: ""
   })
-  
+
   const gameId = props.match.params.id
   
   const getGame = async () => {
@@ -27,6 +28,7 @@ const GameBoard = (props) => {
   }
   const categoryTiles = game.categories.map((category) => (
     <CategoryTile
+    score={game.score}
     gameId={gameId}
     key={category.id}
     id={category.id}

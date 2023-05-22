@@ -1,52 +1,40 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 
 const GuessForm = (props) => {
   const [guess, setGuess] = useState("");
+  const [isCorrect, setIsCorrect] = useState(null);
+  const [redirectToGameBoard, setRedirectToGameBoard] = useState(false);
 
-  const handleInputChange = (event) => {
+  const handleChange = (event) => {
     setGuess(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    const gameId = props.gameId;
-    const questionId = props.questionId;
-    const answer = props.answer;
-
-    // Compare the user's guess with the correct answer
-    const isCorrect = guess === answer;
-
-    // Send the answer to the backend to update the score
-    try {
-      const response = await fetch(`/api/v1/games/${gameId}/questions/${questionId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ guess: guess, isCorrect: isCorrect }),
-      });
-
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`;
-        throw new Error(errorMessage);
-      }
-
-      // Handle the response from the backend if needed
-      // For example, you can update the user's score on the frontend
-
-      // Reset the guess input
-      setGuess("");
-    } catch (err) {
-      console.log(`Error in fetch: ${err.message}`);
-    }
+    const isGuessCorrect = guess.toLowerCase() === props.answer.toLowerCase();
+    setIsCorrect(isGuessCorrect);
   };
 
+  const handleNextQuestion = () => {
+    setRedirectToGameBoard(true);
+  };
+
+  if (redirectToGameBoard) {
+    return <Redirect to={`/games/${props.gameId}`} />;
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={guess} onChange={handleInputChange} />
-      <button type="submit">Submit</button>
-    </form>
+    <div className="guess-form-container">
+      <form className="guess-form" onSubmit={handleSubmit}>
+        <input className="guess-input" type="text" value={guess} onChange={handleChange} />
+        <button className="submit-button" type="submit">Submit</button>
+        {isCorrect !== null && (
+          <p>{isCorrect ? "Your guess is correct!" : "Your guess is incorrect."}</p>
+        )}
+      </form>
+      <button className="next-question-button" onClick={handleNextQuestion}>Next Question</button>
+    </div>
   );
 };
 
