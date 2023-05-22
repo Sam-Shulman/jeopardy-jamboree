@@ -8,7 +8,7 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import GameBoard from "./GameBoard";
-import QuestionBlock from "./QuestionBlock";
+import QuestionShow from "./QuestionShow";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -35,8 +35,8 @@ const App = (props) => {
         <Redirect exact from="/" to="/games"/>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/games/:id/questions/:id" component={QuestionBlock}/>
-        <Route exact path="/games/:id" component={GameBoard}/>
+        <Route exact path="/games/:gameId/questions/:id" component={QuestionShow} user={currentUser}/>
+        <Route exact path="/games/:id" component={GameBoard} user={currentUser}/>
       </Switch>
     </Router>
   );
