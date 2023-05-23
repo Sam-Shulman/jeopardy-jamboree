@@ -15,7 +15,6 @@ gamesRouter.get("/", async (req, res) => {
                 return await GameSerializer.getSummary(game)
             })
             )
-            console.log(serializedGames)
         return res.status(200).json({ games: serializedGames})
     }catch (err) {
         return res.status(500).json({ errors: err})
