@@ -1,29 +1,17 @@
 import got from 'got';
 
 class JServiceClient {
-  static async getStartingQuestions() {
-    try {
-      const url = 'http://jservice.io/api/clues?value=200&min_date=2010-02-20';
-      const apiResponse = await got(url);
-      const responseBody = JSON.parse(apiResponse.body);
-      const pickSixCategoryIds = [];
-      const uniqueCategories = new Set();
-
-      for (let i = 0; i < responseBody.length; i++) {
-        const categoryId = responseBody[i].category_id;
-        if (!uniqueCategories.has(categoryId)) {
-          uniqueCategories.add(categoryId);
-          pickSixCategoryIds.push(categoryId);
-          if (pickSixCategoryIds.length === 20) {
-            break;
-          }
+    static async getStartingQuestions() {
+        try {
+          const url = 'https://jservice.io/api/random?&count=20';
+          const apiResponse = await got(url);
+          const responseBody = JSON.parse(apiResponse.body);
+          const randomQuestionCatIds = responseBody.map((question) => question.category_id);
+          return randomQuestionCatIds;
+        } catch (error) {
+          return { error: error.message };
         }
       }
-      return pickSixCategoryIds;
-    } catch (error) {
-      return { error: error.message };
-    }
-  }
 
   static async getCategory(categoryId) {
     try {
@@ -67,14 +55,21 @@ class JServiceClient {
     }
   }
 
-  static async getSixCategories() {
-    try {
-      const categories = await this.getCategories();
-      return categories;
-    } catch (error) {
-      return { error: error.message };
-    }
-  }
+//   static async getQuestionById(questionId) {
+//     try {
+//     //   const categories = await this.getCategories();
+//       for (const category of categories) {
+//         const question = category.clues.find((clue) => clue.id === questionId);
+//         if (question) {
+//           return question;
+//         }
+//       }
+//       throw new Error("Question not found");
+//     } catch (error) {
+//       throw new Error(error.message);
+//     }
+//   }
+  
 }
 
 export default JServiceClient;

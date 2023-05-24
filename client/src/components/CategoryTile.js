@@ -1,22 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import QuestionShow from "./QuestionShow";
 const CategoryTile = (props) => {
   const { gameId, name, questions, score } = props
 
+  const [questionId, setQuestionId ] = useState(null)
+
+  const [redirect, setRedirect] = useState(false)
+
+  const postSelectedQuestion = async (question) => {
+    setQuestionId(question.id)
+    try {
+      const response = await fetch(`/api/v1/apiGames/${question.id}`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({ question: question })
+      })
+      if(!response.ok){
+        const errorMessage = await response.json()
+        throw new Error(errorMessage)
+      }
+      setRedirect(true)
+    } catch (err){
+      console.error("Error in fetch", err.message)
+    } 
+  }
+
+  if(redirect){
+    return <Redirect to={`random/${questionId}`} />
+  }
+
   const questionBlocks = questions.map((question) => (
-    <Link
-      to={`/games/${gameId}/questions/${question.id}`}
-      key={question.id}
-      id={question.id}
-      gameId={gameId}
-      score={score}
-      className="question-link"
+    <div
+      
+    onClick={ ()=> {postSelectedQuestion(question)}}
     >
       <div className="question-block">
-        <p className="question-text">{question.difficulty}</p>
+        <p className="question-text">{question.value}$</p>
       </div>
-    </Link>
+    </div>
   ));
 
   return (

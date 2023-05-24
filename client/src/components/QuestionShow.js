@@ -2,16 +2,10 @@ import React, { useEffect, useState } from "react";
 import GuessForm from "./GuessForm";
 
 const QuestionShow = (props) => {
-  const [question, setQuestion] = useState({
-    questionText: "",
-    answer: "",
-    difficulty: "",
-    categoryId: "",
-    id: ""
+  const [questionObject, setQuestionObject] = useState({
   });
-  const questionId = props.match.params.id;
-  const userId = props.userId
-  const gameId = props.match.params.gameId
+
+  const questionId = props.match.params.id
 
   useEffect(() => {
     getQuestion();
@@ -20,7 +14,7 @@ const QuestionShow = (props) => {
   const getQuestion = async () => {
     try {
       const response = await fetch(
-        `/api/v1/games/${gameId}/questions/${questionId}`
+        `/api/v1/apiGames/${questionId}`
       );
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`;
@@ -28,24 +22,25 @@ const QuestionShow = (props) => {
         throw error;
       }
       const data = await response.json();
-      setQuestion(data.question);
+      setQuestionObject(data.question);
     } catch (err) {
       console.log(`Error in fetch: ${err.message}`);
     }
   };
+  
 
   return (
     <div className="whole-question-show">
       <div className="question-show">
-        <h1 className="question-title">{question.questionText}</h1>
+        <h1 className="question-title">{questionObject.question.question}</h1>
       </div>
-        <GuessForm
-        answer={question.answer}
-        userId={userId}
-        questionId={question.id}
+        {/* <GuessForm
+        answer={props.answer}
+        userId={props.userId}
+        questionId={props.id}
         score={props.score}
-        gameId={gameId}
-        />
+        gameId={props.gameId}
+        /> */}
     </div>
   );
 };
