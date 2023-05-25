@@ -3,24 +3,26 @@ import CategoryTile from "./CategoryTile.js";
 
 const JServiceGameBoard = (props) => {
   const [categories, setCategories] = useState([]);
+  const gameId = props.match.params.id
 
-  const getGame = async () => {
+  const getCategories = async () => {
     try {
-      const response = await fetch(`/api/v1/apiGames`);
+      const response = await fetch(`/api/v1/games/${gameId}`);
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
         throw error;
       }
       const data = await response.json();
-      setCategories(data.game);
+
+      setCategories(data.game.categories);
     } catch (err) {
       console.log(`Error in fetch: ${err.message}`);
     }
   };
 
   useEffect(() => {
-    getGame();
+    getCategories();
   }, []);
 
   return (
@@ -28,6 +30,7 @@ const JServiceGameBoard = (props) => {
       <div className="categories-row">
         {categories.map((category, index) => (
           <CategoryTile
+            gameId={gameId}
             key={category[index]}
             name={category.category}
             questions={category.clues}

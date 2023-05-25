@@ -45,7 +45,7 @@ class User extends uniqueFunc(Model) {
     return serializedJson;
   }
   static get relationMappings() {
-    const { Game, UserQuestion, Question } = require("./index.js")
+    const { Game, ClueGuess, Clue } = require("./index.js")
     return {
       games: {
         relation: Model.HasManyRelation,
@@ -55,24 +55,24 @@ class User extends uniqueFunc(Model) {
           to: "games.userId"
         }
       },
-      userQuestions: {
+      clueGuesses: {
         relation: Model.HasManyRelation,
-        modelClass: UserQuestion,
+        modelClass: ClueGuess,
         join: {
           from: "users.id",
-          to: "userQuestion.userId"
+          to: "clueGuesses.userId"
         }
       },
-      questions: {
+      clues: {
         relation: Model.ManyToManyRelation,
-        modelClass: Question,
+        modelClass: Clue,
         join: {
           from: "users.id",
           through: {
-            from: "userQuestion.userId",
-            to: "userQuestion.questionId"
+            from: "clueGuesses.userId",
+            to: "clueGuesses.clueId"
           },
-          to: "questions.id"
+          to: "clues.id"
         }
       }
     }

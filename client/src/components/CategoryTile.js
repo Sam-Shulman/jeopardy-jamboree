@@ -1,45 +1,31 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import QuestionShow from "./QuestionShow";
+
 const CategoryTile = (props) => {
-  const { gameId, name, questions, score } = props
+  const { gameId, name, questions, score } = props;
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [guess, setGuess] = useState("");
 
-  const [questionId, setQuestionId ] = useState(null)
+  const handleQuestionClick = (question) => {
+    setSelectedQuestion(question);
+    setIsFormVisible(true);
+  };
 
-  const [redirect, setRedirect] = useState(false)
-
-  const postSelectedQuestion = async (question) => {
-    setQuestionId(question.id)
-    try {
-      const response = await fetch(`/api/v1/apiGames/${question.id}`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json"
-      }),
-      body: JSON.stringify({ question: question })
-      })
-      if(!response.ok){
-        const errorMessage = await response.json()
-        throw new Error(errorMessage)
-      }
-      setRedirect(true)
-    } catch (err){
-      console.error("Error in fetch", err.message)
-    } 
-  }
-
-  if(redirect){
-    return <Redirect to={`random/${questionId}`} />
-  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Perform any necessary logic with the guess and selectedQuestion here
+    // For simplicity, we'll just log them to the console
+    console.log(selectedQuestion.question);
+    console.log(guess);
+    // Clear the input field, selected question, and hide the form
+    setGuess("");
+    setSelectedQuestion(null);
+    setIsFormVisible(false);
+  };
 
   const questionBlocks = questions.map((question) => (
-    <div
-      
-    onClick={ ()=> {postSelectedQuestion(question)}}
-    >
-      <div className="question-block">
-        <p className="question-text">{question.value}$</p>
-      </div>
+    <div className="question-block" onClick={() => handleQuestionClick(question)}>
+      <p className="question-text">{question.value}$</p>
     </div>
   ));
 
@@ -49,6 +35,21 @@ const CategoryTile = (props) => {
       <div className="question-row">
         {questionBlocks}
       </div>
+      {isFormVisible && selectedQuestion && (
+        <div className="guess-form-container">
+          <form className="guess-form" onSubmit={handleSubmit}>
+            <p className="question-text">{selectedQuestion.question}</p>
+            <input
+              className="guess-input"
+              type="text"
+              value={guess}
+              onChange={(event) => setGuess(event.target.value)}
+              placeholder="Enter your guess"
+            />
+            <button className="submit-button" type="submit">Submit</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

@@ -7,8 +7,6 @@ import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
-import GameBoard from "./GameBoard";
-import QuestionShow from "./QuestionShow";
 import HomePage from "./Homepage";
 import JServiceGameBoard from "./JServiceGameBoard";
 
@@ -31,13 +29,10 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/" component={HomePage}/>
-        <Route exact path="/random" component={JServiceGameBoard} />
-        <Route exact path="/random/:id" component={QuestionShow} />
+        <Route exact path="/" component={HomePage} user={currentUser}/>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/games/:gameId/questions/:id" component={QuestionShow} user={currentUser}/>
-        <Route exact path="/games/:id" component={GameBoard} user={currentUser}/>
+        <Route exact path="/games/:id" component={JServiceGameBoard} user={currentUser}/>
       </Switch>
     </Router>
   );

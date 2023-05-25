@@ -4,37 +4,27 @@ class Game extends Model {
     static get tableName() {
         return "games"
     }
-    static get jsonSchema() {
-        return{
-            type: "object",
-            required: ["score", "userId"],
-            properties: {
-                score: {type: ["string", "integer"]},
-                userId: {type: "integer"}
-            }
-        }
-    }
     static get relationMappings() {
-        const { Category, GameCategory, User } = require("./index.js")
+        const { Clue, GameClue, User } = require("./index.js")
         return {
-            categories: {
+            clues: {
                 relation: Model.ManyToManyRelation,
-                modelClass: Category,
+                modelClass: Clue,
                 join: {
                     from: "games.id",
                     through: {
-                        from: "gameCategories.gameId",
-                        to: "gameCategories.categoryId"
+                        from: "gameClues.gameId",
+                        to: "gameClues.clueId"
                     },
-                    to: "categories.id"
+                    to: "clues.id"
                 }
             },
-            gameCategories: {
+            gameClues: {
                 relation: Model.HasManyRelation,
-                modelClass: GameCategory,
+                modelClass: GameClue,
                 join: {
                     from: "games.id",
-                    to: "gameCategories.gameId"
+                    to: "gameClues.gameId"
                 }
             },
             user: {

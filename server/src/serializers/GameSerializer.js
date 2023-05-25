@@ -1,4 +1,4 @@
-import CategorySerializer from "./CategorySerializer.js"
+import JServiceClient from "../apiClient/jService.js"
 
 class GameSerializer {
     static async getSummary(game) {
@@ -7,13 +7,8 @@ class GameSerializer {
         for (const attribute of allowedAttributes) {
             serializedGame[attribute] = game[attribute]
         }
-        const relatedCategories = await game.$relatedQuery("categories")
-        const serializedCategories = await Promise.all(
-            relatedCategories.map(async (category) => {
-               return await CategorySerializer.getSummary(category)
-            })
-            )
-        serializedGame.categories = serializedCategories
+       const categories = await JServiceClient.getCategories()
+       serializedGame.categories = categories
         return serializedGame
     }
 }
