@@ -15,6 +15,7 @@
 
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -26,10 +27,10 @@ html, body {
   color: #f1ebeb;
   font-family: Arial, sans-serif;
   padding: 20px;
-  width: 100%;
-  height: 730px; 
-  object-fit: fill;
   background-image: url(https://www.jeopardy.com/modules/custom/j6/j6_game/images/bg-clue-d.jpg);
+  width: 100%;
+  height: 100%; 
+  object-fit: fill;
   background-position: 50% 0;
   opacity: .83;
 }
@@ -46,36 +47,18 @@ html, body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 24px;
   padding: 20px;
   background-color: #1109eb;
-  border: 2px solid #ffffff;
+  border: 4px solid #ffffff;
+  margin-right: 2px;
+  margin-left: 2px;
   flex: 1;
-  width: 233px;
+  width: 223px;
   height: 145px;
   opacity: 1;
 }
 
-.category.selected {
-  background-color: #1a1a1a;
-}
-
-.category.answered {
-  background-color: #666666;
-}
-
-.question-column {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 105px;
-  width: 230px;
-  border: 1px solid #ccc;
-  background-color: #1109eb;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
 
 .question-column:hover {
   background-color: #f8f4f4;
@@ -88,92 +71,24 @@ html, body {
   font-family: Arial, sans-serif;
   padding: 15px;
   margin-right: 5px ;
+  width: 227px;
   max-width: 800px;
   text-align: center;
   margin-bottom: 5px;
   border-style: solid;
   border-color: #090808;
+  font-size: 12px;
   
 }
 
-.question-title {
-  font-weight: bold;
-  font-size: 40px;
-  margin-bottom: 20px;
+.question-block:hover {
+  background-color: #3832ee;
 }
 
 .question-text {
-  font-size: 36px;
+  font-size: 26px;
 }
 
-.whole-question-block {
-  height: 700px;
-  width: 100%;
-  background-image: url(https://www.jeopardy.com/modules/custom/j6/j6_game/images/bg-clue-d.jpg);
-  padding-top: 100px;
-}
-
-.guess-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-  text-align: center;
-}
-
-.guess-input {
-  padding: 10px;
-  margin-bottom: 10px;
-  width: 300px;
-  font-size: 18px;
-}
-
-.submit-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #e8ecee;
-  color: #090808;
-  border: none;
-  cursor: pointer;
-  border-radius: 16px;
-}
-
-.submit-button:hover {
-  background-color: #faf5f5;
-}
-
-.answer-status {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.correct-answer {
-  color: green;
-  font-weight: bold;
-  font-size: xx-large;
-}
-
-.incorrect-answer {
-  color: red;
-  font-weight: bold;
-  font-size: xx-large;
-}
-
-.next-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #f3f3f9;
-  color: #0f0f0f;
-  border: none;
-  cursor: pointer;
-  border-radius: 16px;
-}
-
-.next-button:hover {
-  background-color: #faf5f5;
-}
 
 .top-bar {
   background-color: #1109eb;
@@ -207,42 +122,8 @@ html, body {
   font-weight: 900;
   background-color: #1109eb
 }
-.whole-question-show {
-  height: 700px;
-  width: 100%;
-  background-image: url(https://www.jeopardy.com/modules/custom/j6/j6_game/images/bg-clue-d.jpg);
-  padding-top: 100px;
-}
-.question-show {
-  background-color: #1109eb;
-  color: #f1ebeb;
-  font-family: Arial, sans-serif;
-  padding: 15px;
-  margin-right: 5px ;
-  height: 200px;
-  max-width: 800px;
-  text-align: center;
-  margin-bottom: 5px;
-  border-style: solid;
-  border-color: #090808;
-  margin-left: 400px;
-  margin-right: 400px;
-}
-.guess-form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.guess-form {
-  text-align: center;
-}
 
-.guess-input {
-  width: 300px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
 
 .submit-button {
   padding: 10px 20px;
@@ -257,17 +138,6 @@ html, body {
   background-color: #2506f1;
 }
 
-.next-question-button {
-  padding: 10px 20px;
-  background-color: #1109eb;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.next-question-button:hover {
-  background-color: #1109eb;
-}
 .home-page {
   text-align: center;
   padding: 20px;
@@ -302,4 +172,92 @@ html, body {
 
 .play-button:hover {
   background-color: #0056b3;
+}
+
+.guess-form {
+  text-align: center;
+  align-items: center;
+}
+
+.guess-input {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  color: rgb(249, 248, 250);
+  border: none;
+  cursor: pointer;
+  background-color: #1109eb;
+}
+
+.submit-button:hover {
+  background-color: #2506f1;
+}
+
+
+.modal-content {
+  background-color: #1109eb;
+  color: #f1ebeb;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  border-style: solid;
+  border-color: #090808;
+  border-width: 4px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.modal-header {
+  margin-bottom: 10px;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.modal-body {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  background-color: #1109eb;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.modal-button:hover {
+  background-color: #2506f1;
+}
+
+.guess-input {
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
 }

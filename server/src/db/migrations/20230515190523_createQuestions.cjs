@@ -6,10 +6,10 @@
  * @param {Knex} knex
  */
 exports.up = async (knex) => {
-    return knex.schema.createTable("questions", (table) => {
+    return knex.schema.createTable("clues", (table) => {
         table.bigIncrements("id")
-        table.string("questionText").notNullable()
-        table.string("difficulty").notNullable()
+        table.string("question").notNullable()
+        table.string("value").notNullable()
         table.string("answer").notNullable()
         table.bigInteger("categoryId").notNullable().unsigned().index().references("categories.id")
         table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())
@@ -21,5 +21,5 @@ exports.up = async (knex) => {
  * @param {Knex} knex
  */
 exports.down = (knex) => {
-    return knex.schema.dropTableIfExists("questions")
+    return knex.schema.dropTableIfExists("clues")
 }
