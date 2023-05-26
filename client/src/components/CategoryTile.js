@@ -1,44 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
 
 const CategoryTile = (props) => {
   const { gameId, name, questions, score } = props;
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(null);
   const [guess, setGuess] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState([]);
 
-  const handleQuestionClick = (question) => {
-    setSelectedQuestion(question);
-    setIsFormVisible(true);
+  useEffect(() => {
+    Modal.setAppElement("body");
+  }, []);
+
+  const handleQuestionClick = (index) => {
+    setCurrentQuestionIndex(index);
+    setShowModal(true);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform any necessary logic with the guess and selectedQuestion here
-    // For simplicity, we'll just log them to the console
-    console.log(selectedQuestion.question);
-    console.log(guess);
-    // Clear the input field, selected question, and hide the form
+    const question = questions[currentQuestionIndex];
+    const isCorrect = guess.toLowerCase() === question.answer.toLowerCase()
+
+    setIsAnswerCorrect((prevAnswers) => {
+      const updatedAnswers = [...prevAnswers];
+      updatedAnswers[currentQuestionIndex] = isCorrect;
+      return updatedAnswers;
+    });
     setGuess("");
-    setSelectedQuestion(null);
-    setIsFormVisible(false);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 2000);
   };
 
-  const questionBlocks = questions.map((question) => (
-    <div className="question-block" onClick={() => handleQuestionClick(question)}>
-      <p className="question-text">{question.value}$</p>
-    </div>
-  ));
+  const renderQuestionForm = () => {
+    const question = questions[currentQuestionIndex];
+    const answerCorrect = isAnswerCorrect[currentQuestionIndex];
 
-  return (
-    <div className="category-tile">
-      <h3 className="category">{name}</h3>
-      <div className="question-row">
-        {questionBlocks}
-      </div>
-      {isFormVisible && selectedQuestion && (
+    if (question) {
+      return (
         <div className="guess-form-container">
           <form className="guess-form" onSubmit={handleSubmit}>
-            <p className="question-text">{selectedQuestion.question}</p>
+            <p className="question-text">{question.question}</p>
             <input
               className="guess-input"
               type="text"
@@ -46,10 +49,54 @@ const CategoryTile = (props) => {
               onChange={(event) => setGuess(event.target.value)}
               placeholder="Enter your guess"
             />
-            <button className="submit-button" type="submit">Submit</button>
+            {answerCorrect !== undefined && (
+              <p className={`feedback-text ${answerCorrect ? "correct" : "incorrect"}`}>
+                {answerCorrect ? "Correct!" : `Incorrect. The correct answer is ${question.answer}.`}
+              </p>
+            )}
           </form>
         </div>
-      )}
+      );
+    }
+    return null;
+  };
+
+  const renderQuestionBlocks = () => {
+    return questions.map((question, index) => (
+      <div
+        key={question.id}
+        className="question-block"
+        onClick={() => handleQuestionClick(index)}
+      >
+        <p className="question-text">{question.value}$</p>
+      </div>
+    ));
+  };
+
+  return (
+    <div className="category-tile">
+      <h3 className="category">{name}</h3>
+      <div className="question-row">{renderQuestionBlocks()}</div>
+      <Modal
+        isOpen={showModal}
+        onRequestClose={() => setShowModal(false)}
+        className="modal-content"
+      >
+        <div className="modal-header">
+          <h2 className="modal-title">Question</h2>
+        </div>
+        <div className="modal-body">
+          {renderQuestionForm()}
+        </div>
+        <div className="modal-footer">
+          <button className="modal-button" onClick={() => setShowModal(false)}>
+            Cancel
+          </button>
+          <button className="modal-button" type="submit" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

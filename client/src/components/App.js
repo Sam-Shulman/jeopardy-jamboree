@@ -10,6 +10,7 @@ import TopBar from "./layout/TopBar";
 import HomePage from "./Homepage";
 import JServiceGameBoard from "./JServiceGameBoard";
 
+
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const fetchCurrentUser = async () => {
