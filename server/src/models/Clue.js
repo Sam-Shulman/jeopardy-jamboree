@@ -37,7 +37,6 @@ class Clue extends Model {
             }
         }
     }
-
 }
 
 module.exports = Clue

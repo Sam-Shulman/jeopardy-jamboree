@@ -33,8 +33,8 @@ class Game extends Model {
                 join: {
                     from: "games.userId",
                     to: "users.id"
+                }
             }
-        }
         }
     } 
 }

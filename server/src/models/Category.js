@@ -15,8 +15,8 @@ class Category extends Model {
                     to: "clues.categoryId"
                 }
             }
+        }
     }
-}
 }
 
 module.exports = Category

@@ -54,22 +54,6 @@ class JServiceClient {
       return { error: error.message };
     }
   }
-
-//   static async getQuestionById(questionId) {
-//     try {
-//     //   const categories = await this.getCategories();
-//       for (const category of categories) {
-//         const question = category.clues.find((clue) => clue.id === questionId);
-//         if (question) {
-//           return question;
-//         }
-//       }
-//       throw new Error("Question not found");
-//     } catch (error) {
-//       throw new Error(error.message);
-//     }
-//   }
-  
 }
 
 export default JServiceClient;
