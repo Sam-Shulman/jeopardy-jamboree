@@ -7,10 +7,15 @@ const CategoryTile = (props) => {
   const [guess, setGuess] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState([]);
+  const [isGuessEmpty, setIsGuessEmpty] = useState(false);
 
   useEffect(() => {
     Modal.setAppElement("body");
   }, []);
+
+  const removeHtmlTags = (text) => {
+    return text.replace(/<\/?[^>]+(>|$)/g, "");
+  };
 
   const handleQuestionClick = (index) => {
     setCurrentQuestionIndex(index);
@@ -20,7 +25,18 @@ const CategoryTile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const question = questions[currentQuestionIndex];
-    const isCorrect = guess.toLowerCase() === question.answer.toLowerCase()
+    const answer = removeHtmlTags(question.answer.toLowerCase().trim());
+    const guessFormatted = guess.toLowerCase().trim();
+    const arrayOfCorrectAnswers = answer.split(" ")
+    const isCorrect =
+      guessFormatted === answer || arrayOfCorrectAnswers.includes(guessFormatted);
+
+    if (guessFormatted === "") {
+      setIsGuessEmpty(true);
+      return;
+    }
+
+    setIsGuessEmpty(false);
 
     setIsAnswerCorrect((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
@@ -49,9 +65,12 @@ const CategoryTile = (props) => {
               onChange={(event) => setGuess(event.target.value)}
               placeholder="Enter your guess"
             />
+            {isGuessEmpty && (
+              <p className="error-message">Please enter your guess.</p>
+            )}
             {answerCorrect !== undefined && (
               <p className={`feedback-text ${answerCorrect ? "correct" : "incorrect"}`}>
-                {answerCorrect ? "Correct!" : `Incorrect. The correct answer is ${question.answer}.`}
+                {answerCorrect ? "Correct!" : `Incorrect. The correct answer is ${question.answer.trim()}.`}
               </p>
             )}
           </form>

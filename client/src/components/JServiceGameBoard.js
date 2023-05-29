@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import CategoryTile from "./CategoryTile.js";
+
 
 const JServiceGameBoard = (props) => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const gameId = props.match.params.id;
+  const history = useHistory();
 
   const getCategories = async () => {
     try {
@@ -16,9 +19,14 @@ const JServiceGameBoard = (props) => {
       }
       const data = await response.json();
       setCategories(data.game.categories);
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
-      console.log(`Error in fetch: ${err.message}`);
+      if (err.response && err.response.status === 429 || err.message.includes("categories.map is not a function")) {
+        alert("Cannot create a new game so quickly. Please wait, refresh the home page and try again in 15 seconds.");
+        history.push("/");
+      } else {
+        console.log(`Error in fetch: ${err.message}`);
+      }
     }
   };
 

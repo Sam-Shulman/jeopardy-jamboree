@@ -24,7 +24,8 @@ class JServiceClient {
 
       for (const value of clueValues) {
         const clue = clues.find((c) => c.value === value);
-        if (clue) {
+        if (clue && !clue.question.toLowerCase().includes("seen") && !clue.question.toLowerCase().includes("heard") && !clue.question.toLowerCase().includes("shown"))
+         {
           categoryClues.push(clue);
         }
       }
