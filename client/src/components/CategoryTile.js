@@ -14,7 +14,11 @@ const CategoryTile = (props) => {
   }, []);
 
   const removeHtmlTags = (text) => {
-    return text.replace(/<\/?[^>]+(>|$)/g, "");
+    return text.replace(/<\/?[^>]+(>|$)/g, "").replace(/[\\"]/g, "");
+  };
+
+  const removeHtmlTagsAndQuotes = (text) => {
+    return text.replace(/<\/?[^>]+(>|$)/g, "").replace(/[\\'"]/g, "");
   };
 
   const handleQuestionClick = (index) => {
@@ -25,7 +29,7 @@ const CategoryTile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const question = questions[currentQuestionIndex];
-    const answer = removeHtmlTags(question.answer.toLowerCase().trim());
+    const answer = removeHtmlTagsAndQuotes(question.answer.toLowerCase().trim());
     const guessFormatted = guess.toLowerCase().trim();
     const arrayOfCorrectAnswers = answer.split(" ")
     const isCorrect =
@@ -54,6 +58,7 @@ const CategoryTile = (props) => {
     const answerCorrect = isAnswerCorrect[currentQuestionIndex];
 
     if (question) {
+      const answer = removeHtmlTags(question.answer)
       return (
         <div className="guess-form-container">
           <form className="guess-form" onSubmit={handleSubmit}>
@@ -70,7 +75,7 @@ const CategoryTile = (props) => {
             )}
             {answerCorrect !== undefined && (
               <p className={`feedback-text ${answerCorrect ? "correct" : "incorrect"}`}>
-                {answerCorrect ? "Correct!" : `Incorrect. The correct answer is ${question.answer.trim()}.`}
+                {answerCorrect ? "Correct!" : `Incorrect. The correct answer is ${answer}.`}
               </p>
             )}
           </form>
