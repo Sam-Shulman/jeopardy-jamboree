@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 
 const CategoryTile = (props) => {
-  const { gameId, name, questions, score } = props;
+  const { gameId, name, questions, addScore, score } = props;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(null);
   const [guess, setGuess] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState([]);
   const [isGuessEmpty, setIsGuessEmpty] = useState(false);
+
 
   useEffect(() => {
     Modal.setAppElement("body");
@@ -25,26 +26,31 @@ const CategoryTile = (props) => {
     setCurrentQuestionIndex(index);
     setShowModal(true);
   };
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const question = questions[currentQuestionIndex];
     const answer = removeHtmlTagsAndQuotes(question.answer.toLowerCase().trim());
     const guessFormatted = guess.toLowerCase().trim();
-    const arrayOfCorrectAnswers = answer.split(" ")
+    const arrayOfCorrectAnswers = answer.split(" ");
     const isCorrect =
       guessFormatted === answer || arrayOfCorrectAnswers.includes(guessFormatted);
-
+  
     if (guessFormatted === "") {
       setIsGuessEmpty(true);
       return;
     }
-
+  
     setIsGuessEmpty(false);
-
+  
     setIsAnswerCorrect((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       updatedAnswers[currentQuestionIndex] = isCorrect;
+  
+      if (isCorrect) {
+        addScore(question.value);
+      }
+  
       return updatedAnswers;
     });
     setGuess("");
@@ -52,7 +58,7 @@ const CategoryTile = (props) => {
       setShowModal(false);
     }, 2000);
   };
-
+    
   const renderQuestionForm = () => {
     const question = questions[currentQuestionIndex];
     const answerCorrect = isAnswerCorrect[currentQuestionIndex];
@@ -122,6 +128,7 @@ const CategoryTile = (props) => {
         </div>
       </Modal>
     </div>
+
   );
 };
 

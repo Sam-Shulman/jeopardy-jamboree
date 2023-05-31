@@ -1,7 +1,9 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
-// place global css here
+
+/* place global CSS here */
+
 *,
 *::before,
 *::after {
@@ -13,11 +15,18 @@
   tab-size: 4;
 }
 
+#app{
+  min-height: 100vh;
+  min-width: 100%;
+
+}
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  background-image: url(https://www.jeopardy.com/sites/default/files/social_meta/jeopardy_logo.jpg);
 }
 
 .game-board {
@@ -26,18 +35,30 @@ html, body {
   background-color: #fdfdfd;
   color: #f1ebeb;
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background-image: url(https://www.jeopardy.com/modules/custom/j6/j6_game/images/bg-clue-d.jpg);
+  padding: 5px;
   width: 100%;
-  min-height: 100vh; 
-  object-fit: fill;
-  opacity: .83;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-image: url(https://www.jeopardy.com/sites/default/files/social_meta/jeopardy_logo.jpg);
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin-top: 20px;
+  max-width: 100%;
 }
 
 .categories-row {
   display: flex;
-  margin-bottom: 10px;
-  max-width: 100%;
+  flex-wrap: nowrap;
+  justify-content: center;
+  
+}
+.category-tile {
+  max-width: 15%;
 }
 
 .category {
@@ -45,24 +66,29 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-weight: bold;
   font-size: 24px;
-  padding: 20px;
+  padding: 15px;
   background-color: #1109eb;
   border: 4px solid #ffffff;
   margin-right: 2px;
-  margin-left: 2px;
-  flex: 1;
-  width: 95%;
-  height: 25%;
+  margin-left: 0px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+  height: 23%;
   opacity: 1;
+  max-width: 100%;
 }
-
 
 .question-column:hover {
   background-color: #f8f4f4;
   color: black;
+}
+
+.question-row {
+  max-width: 15%;
 }
 
 .question-block {
@@ -70,8 +96,8 @@ html, body {
   color: #f1ebeb;
   font-family: Arial, sans-serif;
   padding: 20px;
-  margin-right: 5px ;
-  width: 230px;
+  margin-right: 2px;
+  width: 200px;
   max-width: 800px;
   height: 100%;
   text-align: center;
@@ -79,7 +105,6 @@ html, body {
   border-style: solid;
   border-color: #090808;
   font-size: 12px;
-  
 }
 
 .question-block:hover {
@@ -90,8 +115,9 @@ html, body {
   font-size: 26px;
 }
 
-
 .top-bar {
+  position: relative;
+  z-index: 1;
   background-color: #1109eb;
   color: #0b0a0a;
   display: flex;
@@ -107,24 +133,23 @@ html, body {
   color: #faf7f7;
 }
 
-.home-button{
+.home-button {
   padding-left: 10px;
   padding-top: 17.5px;
   align-items: center;
   color: #faf7f7;
   font-weight: 900;
-  background-color: #1109eb
+  background-color: #1109eb;
 }
-.menu-text{
+
+.menu-text {
   padding-left: 10px;
   padding-top: 17.5px;
   align-items: center;
   color: #fefefe;
   font-weight: 900;
-  background-color: #1109eb
+  background-color: #1109eb;
 }
-
-
 
 .submit-button {
   padding: 10px 20px;
@@ -142,10 +167,8 @@ html, body {
 .home-page {
   text-align: center;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  object-fit: fill; 
   height: 100vh;
   background-color: #f2f2f9;
   color: #f3f3f8;
@@ -153,7 +176,7 @@ html, body {
   font-weight: 400;
 }
 
-  .home-title {
+.home-title {
   font-size: 60px;
   margin-bottom: 10px;
   padding-top: 150px;
@@ -200,7 +223,6 @@ html, body {
 .submit-button:hover {
   background-color: #2506f1;
 }
-
 
 .modal-content {
   background-color: #1109eb;
@@ -264,4 +286,16 @@ html, body {
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
+}
+
+.score {
+  display: inline-block;
+  justify-content: center;
+  text-align: center;
+  font-weight: 400;
+}
+
+.score-container {
+  text-align: center;
+  color: #f8f8f8;
 }
