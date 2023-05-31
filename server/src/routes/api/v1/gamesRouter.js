@@ -35,4 +35,18 @@ gamesRouter.get("/:id", limiter, async (req, res) => {
   }
 });
 
+
+gamesRouter.patch("/:id", async (req, res) => {
+  const { id } = req.params
+  const { score } = req.body
+  try { 
+    const game = await Game.query().findById(id);
+    const updatedScore = game.score + score;
+    const updatedGame =  await Game.query().patchAndFetchById( id, { score: updatedScore })
+    return res.status(201).json({ game: updatedGame})
+  } catch (err) {
+    return res.status(500).json({ errors: err });
+  }
+})
+
 export default gamesRouter;
