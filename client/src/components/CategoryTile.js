@@ -98,7 +98,7 @@ const CategoryTile = (props) => {
         className="question-block"
         onClick={() => handleQuestionClick(index)}
       >
-        <p className="question-text">{question.value}$</p>
+        <p className="question-text">{question.value}</p>
       </div>
     ));
   };
