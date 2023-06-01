@@ -17,8 +17,7 @@
 
 #app{
   min-height: 100vh;
-  min-width: 10vw;
-
+  min-width: 100vw;
 }
 
 html, body {
@@ -48,8 +47,9 @@ html, body {
   text-align: center;
   margin: 0%;
   overflow: hidden;
-  font-size: 2.5vw;
-  font-style: Helvetica
+  font-size: 4vh;
+  font-size-adjust: inherit;
+  font-style: Helvetica;
  }
 
 .question-block {
