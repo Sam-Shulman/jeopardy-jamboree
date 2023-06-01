@@ -95,7 +95,7 @@ const CategoryTile = (props) => {
     return questions.map((question, index) => (
       <div
         key={question.id}
-        className="question-block"
+        className="question-block "
         onClick={() => handleQuestionClick(index)}
       >
         <p className="question-text">{question.value}</p>
@@ -104,9 +104,9 @@ const CategoryTile = (props) => {
   };
 
   return (
-    <div className="category-tile">
+    <div className="category-tile cell small-2">
       <h3 className="category">{name}</h3>
-      <div className="question-row">{renderQuestionBlocks()}</div>
+      <div className="question-column">{renderQuestionBlocks()}</div>
       <Modal
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
