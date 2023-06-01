@@ -17,7 +17,7 @@
 
 #app{
   min-height: 100vh;
-  min-width: 100%;
+  min-width: 10vw;
 
 }
 
@@ -26,85 +26,43 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-image: url(https://www.jeopardy.com/sites/default/files/social_meta/jeopardy_logo.jpg);
+  background-image: url(https://static.vecteezy.com/system/resources/previews/002/703/626/original/light-purple-background-with-small-and-big-stars-vector.jpg);
 }
 
 .game-board {
   display: flex;
   flex-direction: column;
-  background-color: #fdfdfd;
   color: #f1ebeb;
   font-family: Arial, sans-serif;
   padding: 5px;
   width: 100%;
   height: 100%;
-  justify-content: center;
-  align-items: center;
-  background-image: url(https://www.jeopardy.com/sites/default/files/social_meta/jeopardy_logo.jpg);
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin-top: 20px;
-  max-width: 100%;
 }
 
-.categories-row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  
-}
-.category-tile {
-  max-width: 15%;
-}
 
-.category {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  font-weight: bold;
-  font-size: 24px;
-  padding: 15px;
+ .category{
+  border: 2px solid #ffffff;
   background-color: #1109eb;
-  border: 4px solid #ffffff;
-  margin-right: 2px;
-  margin-left: 0px;
-  flex-grow: 1;
-  flex-shrink: 1;
-  min-width: 0;
-  height: 23%;
-  opacity: 1;
-  max-width: 100%;
-}
-
-.question-column:hover {
-  background-color: #f8f4f4;
-  color: black;
-}
-
-.question-row {
-  max-width: 15%;
-}
+  height: 17vh;
+  width: 17vw;
+  text-align: center;
+  margin: 0%;
+  overflow: hidden;
+  font-size: 2.5vw;
+  font-style: Helvetica
+ }
 
 .question-block {
   background-color: #1109eb;
   color: #f1ebeb;
-  font-family: Arial, sans-serif;
+  font-style: Helvetica;
   padding: 20px;
-  margin-right: 2px;
-  width: 200px;
-  max-width: 800px;
-  height: 100%;
   text-align: center;
-  margin-bottom: 2px;
   border-style: solid;
-  border-color: #090808;
-  font-size: 12px;
+  border-color: #faf9f9;
+  font-size: 5vw;
+  width: 17vw;
+  border-width: 1px;
 }
 
 .question-block:hover {
@@ -172,8 +130,8 @@ html, body {
   height: 100vh;
   background-color: #f2f2f9;
   color: #f3f3f8;
-  background-image: url(https://www.jeopardy.com/sites/default/files/social_meta/jeopardy_logo.jpg);
   font-weight: 400;
+  background-image: url(https://static.vecteezy.com/system/resources/previews/002/703/626/original/light-purple-background-with-small-and-big-stars-vector.jpg);
 }
 
 .home-title {

@@ -67,7 +67,7 @@ const JServiceGameBoard = (props) => {
       {loading ? (
         <div className="loading-screen">Loading...</div>
       ) : (
-        <div className="categories-row">
+        <div className="categories-row grid-x">
           {categories.map((category, index) => (
             <CategoryTile
               gameId={gameId}
