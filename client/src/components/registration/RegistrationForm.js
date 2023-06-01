@@ -105,14 +105,14 @@ const RegistrationForm = () => {
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
         <div>
-          <label>
+          <label className="form">
             Email
             <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
             <FormError error={errors.email} />
           </label>
         </div>
         <div>
-          <label>
+          <label className="form">
             Password
             <input
               type="password"
@@ -124,7 +124,7 @@ const RegistrationForm = () => {
           </label>
         </div>
         <div>
-          <label>
+          <label className="form">
             Password Confirmation
             <input
               type="password"

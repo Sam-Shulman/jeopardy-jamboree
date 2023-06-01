@@ -81,14 +81,14 @@ const SignInForm = () => {
       {credentialsErrors ? <p className="callout alert">{credentialsErrors}</p> : null}
       <form onSubmit={onSubmit}>
         <div>
-          <label>
+          <label className="form">
             Email
             <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
             <FormError error={errors.email} />
           </label>
         </div>
         <div>
-          <label>
+          <label className="form">
             Password
             <input
               type="password"
