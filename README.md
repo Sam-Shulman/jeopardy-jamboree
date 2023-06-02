@@ -15,7 +15,6 @@ https://localhost3000
     - React
     - Foundation CSS
     - PostgreSQL
-    - 
 
 ### Installation
     - Run `git clone https://github.com/Sam-Shulman/jeopardy-jamboree.git` in your terminal.
