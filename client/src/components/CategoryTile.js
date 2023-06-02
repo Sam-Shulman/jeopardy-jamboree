@@ -92,15 +92,20 @@ const CategoryTile = (props) => {
   };
 
   const renderQuestionBlocks = () => {
-    return questions.map((question, index) => (
-      <div
-        key={question.id}
-        className="question-block "
-        onClick={() => handleQuestionClick(index)}
-      >
-        <p className="question-text">{question.value}</p>
-      </div>
-    ));
+    return questions.map((question, index) => {
+      const answerCorrect = isAnswerCorrect[index];
+      const isAnswered = answerCorrect !== undefined;
+  
+      return (
+        <div
+          key={question.id}
+          className={`question-block ${isAnswered ? 'answered' : ''}`}
+          onClick={!isAnswered ? () => handleQuestionClick(index) : null}
+        >
+          <p className="question-text">{isAnswered ? '' : question.value}</p>
+        </div>
+      );
+    });
   };
   const capitalizeEachWord = (str) => {
     return str
