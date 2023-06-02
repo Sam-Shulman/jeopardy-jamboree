@@ -102,10 +102,16 @@ const CategoryTile = (props) => {
       </div>
     ));
   };
+  const capitalizeEachWord = (str) => {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
     <div className="category-tile cell small-2">
-      <h3 className="category">{name}</h3>
+      <h3 className="category">{capitalizeEachWord(name)}</h3>
       <div className="question-column">{renderQuestionBlocks()}</div>
       <Modal
         isOpen={showModal}
