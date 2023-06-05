@@ -18,8 +18,15 @@ const CategoryTile = (props) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "").replace(/[\\"]/g, "");
   };
 
-  const removeHtmlTagsAndQuotes = (text) => {
-    return text.replace(/<\/?[^>]+(>|$)/g, "").replace(/[\\'"]/g, "");
+  const removeNonTextSymbols = (text) => {
+    const withoutHtmlTags = text.replace(/<\/?[^>]+(>|$)/g, "");
+  
+    const withoutQuotes = withoutHtmlTags.replace(/['"]/g, "");
+  
+    const withoutNonTextSymbols = withoutQuotes.replace(/[^\w\s]/g, "");
+    const withoutArticles = withoutNonTextSymbols.replace(/\b(a|the)\b/gi, "");
+  
+    return withoutArticles.trim();
   };
 
   const handleQuestionClick = (index) => {
@@ -30,7 +37,7 @@ const CategoryTile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const question = questions[currentQuestionIndex];
-    const answer = removeHtmlTagsAndQuotes(question.answer.toLowerCase().trim());
+    const answer = removeNonTextSymbols(question.answer.toLowerCase().trim());
     const guessFormatted = guess.toLowerCase().trim();
     const arrayOfCorrectAnswers = answer.split(" ");
     const isCorrect =
