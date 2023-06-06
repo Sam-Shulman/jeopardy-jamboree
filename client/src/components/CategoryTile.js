@@ -14,6 +14,38 @@ const CategoryTile = (props) => {
     Modal.setAppElement("body");
   }, []);
 
+  const calculateLevenshteinDistance = (str1, str2) => {
+    const m = str1.length;
+    const n = str2.length;
+  
+    if (m === 0) return n;
+    if (n === 0) return m;
+  
+    const d = Array.from(Array(m + 1), () => Array(n + 1).fill(0));
+  
+    for (let i = 0; i <= m; i++) {
+      d[i][0] = i;
+    }
+  
+    for (let j = 0; j <= n; j++) {
+      d[0][j] = j;
+    }
+  
+    for (let j = 1; j <= n; j++) {
+      for (let i = 1; i <= m; i++) {
+        const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+        d[i][j] = Math.min(
+          d[i - 1][j] + 1,
+          d[i][j - 1] + 1,
+          d[i - 1][j - 1] + cost
+        );
+      }
+    }
+  
+    return d[m][n];
+  };
+  const levenshteinThreshold = 1
+
   const removeHtmlTags = (text) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "").replace(/[\\"]/g, "");
   };
@@ -23,10 +55,19 @@ const CategoryTile = (props) => {
   
     const withoutQuotes = withoutHtmlTags.replace(/['"]/g, "");
   
-    const withoutNonTextSymbols = withoutQuotes.replace(/[^\w\s]/g, "");
+    const withoutApostrophes = withoutQuotes.replace(/'/g, "");
+  
+    const withoutDashes = withoutApostrophes.replace(/-/g, " ");
+  
+    const withoutNonTextSymbols = withoutDashes.replace(/[^\w\s]/g, "");
+  
     const withoutArticles = withoutNonTextSymbols.replace(/\b(a|the)\b/gi, "");
   
     return withoutArticles.trim();
+  };
+  
+  const removeParentheses = (text) => {
+    return text.replace(/\([^)]*\)/g, "");
   };
 
   const handleQuestionClick = (index) => {
@@ -41,7 +82,9 @@ const CategoryTile = (props) => {
     const guessFormatted = guess.toLowerCase().trim();
     const arrayOfCorrectAnswers = answer.split(" ");
     const isCorrect =
-      guessFormatted === answer || arrayOfCorrectAnswers.includes(guessFormatted);
+      removeNonTextSymbols(guessFormatted) === answer || arrayOfCorrectAnswers.includes(guessFormatted) 
+      || guess.toLowerCase() == removeHtmlTags(question.answer).toLowerCase() || guessFormatted === removeParentheses(answer)
+      || calculateLevenshteinDistance(guessFormatted, answer) <= levenshteinThreshold;
   
     if (guessFormatted === "") {
       setIsGuessEmpty(true);
