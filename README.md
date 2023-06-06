@@ -30,7 +30,8 @@ https://localhost3000
     - Make an account using the registration form in the top right of the webpage
     - Click play a game and test yourself!
 
-<img width="1418" alt="Screenshot 2023-05-30 at 11 36 57 AM" src="https://github.com/Sam-Shulman/jeopardy-jamboree/assets/122935111/61fe70b3-9b89-412d-8586-fe4fd778716a">
+<img width="1439" alt="Screenshot 2023-06-06 at 3 22 08 PM" src="https://github.com/Sam-Shulman/jeopardy-jamboree/assets/122935111/f2efac6f-7db7-4f1d-99fb-a832ae7f80ba">
+
 
 
 ### To-Do:
