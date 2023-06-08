@@ -33,7 +33,7 @@ const App = (props) => {
         <Route exact path="/" component={HomePage} user={currentUser}/>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/games/:id" component={JServiceGameBoard} user={currentUser}/>
+        <Route exact path="/games/:id" render={(props) => <JServiceGameBoard {...props} user={currentUser}/>}/>
       </Switch>
     </Router>
   );

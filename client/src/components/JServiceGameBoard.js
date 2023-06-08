@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CategoryTile from "./CategoryTile.js";
+import { Redirect } from "react-router-dom";
 
 const JServiceGameBoard = (props) => {
   const [categories, setCategories] = useState([]);
@@ -8,6 +9,8 @@ const JServiceGameBoard = (props) => {
   const gameId = props.match.params.id;
   const history = useHistory();
   const [totalScore, setTotalScore] = useState(0);
+  const [amountOfAnsweredQuestions, setAmountOfAnsweredQuestions] = useState(0);
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const getCategories = async () => {
     try {
@@ -40,9 +43,9 @@ const JServiceGameBoard = (props) => {
     getCategories();
   }, []);
 
-   const addScore = async (value) => {
+  const addScore = async (value) => {
     try {
-      if (value && value > 0) { 
+      if (value && value > 0) {
         const response = await fetch(`/api/v1/games/${gameId}`, {
           method: "PATCH",
           headers: new Headers({
@@ -59,22 +62,57 @@ const JServiceGameBoard = (props) => {
     }
   };
 
+  const handleQuestionAnswered = () => {
+    setAmountOfAnsweredQuestions((prevCount) => prevCount + 1);
+  };
+
+  const handleNewGame = async () => {
+    try{
+      const response = await fetch(`/api/v1/games/${gameId}`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json"
+        }),
+
+        body: JSON.stringify({score: totalScore}),
+      })
+      console.log(response)
+      setShouldRedirect(true)
+      } catch (error) {
+        console.error(`Error in fetch: ${error.message}`);
+      }
+    };
+
+    if (shouldRedirect) {
+      return <Redirect push to="/" />;
+    }
+
   return (
     <div className="game-board">
-      <div className="score-container">
-      <p className="score">Total Score: {totalScore}</p>
-      </div>
+         {amountOfAnsweredQuestions >= 30 && (
+        <div className="ending-button">
+          <button className="end-game-button" onClick={handleNewGame}>
+            End Game
+          </button>
+        </div>
+      )}
+        {!loading && (
+        <div className="score-container">
+          <p className="score">Total Score: {totalScore}</p>
+        </div>
+      )}
       {loading ? (
         <div className="loading-screen">Loading...</div>
-      ) : (
+      ) : ( 
         <div className="categories-row grid-x">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <CategoryTile
-              gameId={gameId}
-              key={category[index]}
+              key={category.id}
               name={category.category}
               questions={category.clues}
+              gameId={gameId}
               addScore={addScore}
+              onQuestionAnswered={handleQuestionAnswered}
             />
           ))}
         </div>
