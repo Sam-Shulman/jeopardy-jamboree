@@ -8,8 +8,7 @@ const CategoryTile = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState([]);
   const [isGuessEmpty, setIsGuessEmpty] = useState(false);
-
-
+ 
   useEffect(() => {
     Modal.setAppElement("body");
   }, []);
@@ -71,20 +70,25 @@ const CategoryTile = (props) => {
   };
 
   const handleQuestionClick = (index) => {
-    setCurrentQuestionIndex(index);
-    setShowModal(true);
+  
+      setCurrentQuestionIndex(index);
+      setShowModal(true);
+  
   };
   
   const handleSubmit = (event) => {
     event.preventDefault();
+  
     const question = questions[currentQuestionIndex];
     const answer = removeNonTextSymbols(question.answer.toLowerCase().trim());
     const guessFormatted = guess.toLowerCase().trim();
     const arrayOfCorrectAnswers = answer.split(" ");
     const isCorrect =
-      removeNonTextSymbols(guessFormatted) === answer || arrayOfCorrectAnswers.includes(guessFormatted) 
-      || guess.toLowerCase() == removeHtmlTags(question.answer).toLowerCase() || guessFormatted === removeParentheses(answer)
-      || calculateLevenshteinDistance(guessFormatted, answer) <= levenshteinThreshold;
+      removeNonTextSymbols(guessFormatted) === answer ||
+      arrayOfCorrectAnswers.includes(guessFormatted) ||
+      guess.toLowerCase() === removeHtmlTags(question.answer).toLowerCase() ||
+      guessFormatted === removeParentheses(answer) ||
+      calculateLevenshteinDistance(guessFormatted, answer) <= levenshteinThreshold;
   
     if (guessFormatted === "") {
       setIsGuessEmpty(true);
@@ -92,7 +96,6 @@ const CategoryTile = (props) => {
     }
   
     setIsGuessEmpty(false);
-  
     setIsAnswerCorrect((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       updatedAnswers[currentQuestionIndex] = isCorrect;
@@ -107,15 +110,18 @@ const CategoryTile = (props) => {
     setTimeout(() => {
       setShowModal(false);
     }, 2000);
+    props.onQuestionAnswered(); 
   };
+  
     
   const renderQuestionForm = () => {
     const question = questions[currentQuestionIndex];
     const answerCorrect = isAnswerCorrect[currentQuestionIndex];
-
+  
     if (question) {
-      const answer = removeHtmlTags(question.answer)
-      return (
+      const answer = removeHtmlTags(question.answer);
+  
+    return (
         <div className="guess-form-container">
           <form className="guess-form" onSubmit={handleSubmit}>
             <p className="question-text">{question.question}</p>
@@ -140,13 +146,14 @@ const CategoryTile = (props) => {
     }
     return null;
   };
+  
+  
 
   const renderQuestionBlocks = () => {
     return questions.map((question, index) => {
       const answerCorrect = isAnswerCorrect[index];
       const isAnswered = answerCorrect !== undefined;
-  
-      return (
+    return (
         <div
           key={question.id}
           className={`question-block ${isAnswered ? 'answered' : ''}`}
