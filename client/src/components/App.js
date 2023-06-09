@@ -9,6 +9,7 @@ import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import HomePage from "./Homepage";
 import JServiceGameBoard from "./JServiceGameBoard";
+import ProfilePage from "./ProfilePage";
 
 
 const App = (props) => {
@@ -34,6 +35,7 @@ const App = (props) => {
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/games/:id" render={(props) => <JServiceGameBoard {...props} user={currentUser}/>}/>
+        <Route exact path="/profiles/:id" render={(props) => <ProfilePage {...props} user={currentUser}/>}/>
       </Switch>
     </Router>
   );

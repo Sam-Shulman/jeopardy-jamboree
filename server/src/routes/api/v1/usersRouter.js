@@ -5,6 +5,7 @@ import { User } from "../../../models/index.js";
 
 const usersRouter = new express.Router();
 
+
 usersRouter.post("/", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -19,5 +20,19 @@ usersRouter.post("/", async (req, res) => {
     return res.status(422).json({ errors: error });
   }
 });
+
+usersRouter.get("/:id", async (req,res) => {
+  const { id } = req.params 
+  try {
+    const findUser = await User.query().findById(id)
+    
+    const userWithGames = await findUser.$relatedQuery("games")
+    findUser.games = userWithGames
+  
+    return res.status(200).json({ user: findUser})
+  } catch (error){
+    return res.status(500).json({ errors: error });
+  }
+})
 
 export default usersRouter;
