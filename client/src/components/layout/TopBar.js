@@ -20,18 +20,33 @@ const TopBar = ({ user }) => {
     </li>,
   ];
 
+  const userId = user?.id;
+
   return (
     <div className="top-bar">
       <div className="top-bar-left">
         <ul className="menu">
           <li className="home-button">Jeopardy Jamboree</li>
-          <li className="menu-text"> 
-            <Link className="menu-text" to="/">Home</Link>
+          <li className="menu-text">
+            <Link className="menu-text-deeper" to="/">
+              Home
+            </Link>
           </li>
+          {user && userId && (
+            <li className="profile-link">
+              <Link className="profile-text" to={`/profiles/${userId}`}>
+                Profile
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="top-bar-right">
-        <ul className="menu">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
+        <ul>
+          <li className="menu">
+            {user ? authenticatedListItems : unauthenticatedListItems}
+          </li>
+        </ul>
       </div>
     </div>
   );
