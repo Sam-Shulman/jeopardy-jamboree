@@ -35,7 +35,6 @@ https://localhost3000
 
 
 ### To-Do:
-    - I am hoping to track scores and display the scores on a user profile page
     - I would like people to be able to save their games and send it to their friends, competing with the same questions
     - Work towards building a customizable game, where users can make their own questions
 
