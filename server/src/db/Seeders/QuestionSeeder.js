@@ -1,194 +1,194 @@
-import { Question } from "../../models/index.js";
+import { Clue } from "../../models/index.js";
 
 class QuestionSeeder {
     static async seed() {
         const questionsData = [
             {
-                questionText: "What is the capital of California?", 
-                difficulty: "easy",
+                question: "What is the capital of California?", 
+                value: 200,
                 answer: "Sacramento",
                 categoryId: 1
             },
             {
-                questionText: "What is the capital of Florida?", 
-                difficulty: "easy",
+                question: "What is the capital of Florida?", 
+                value: 400,
                 answer: "Tallahassee",
                 categoryId: 1            
             },
             {
-                questionText: "What is the capital of Maryland?", 
-                difficulty: "medium",
+                question: "What is the capital of Maryland?", 
+                value: 600,
                 answer: "Annapolis",
                 categoryId: 1
             },
             {
-                questionText: "What is the capital of Pennsylvania?", 
-                difficulty: "medium",
+                question: "What is the capital of Pennsylvania?", 
+                value: 800,
                 answer: "Harrisburg",
                 categoryId: 1
             },
             {
-                questionText: "What is the capital of Oregon?", 
-                difficulty: "hard",
+                question: "What is the capital of Oregon?", 
+                value: 1000,
                 answer: "Salem",
                 categoryId: 1
             },
             {
-                questionText: "What is the name of The Beatles' primary drummer", 
-                difficulty: "easy",
+                question: "What is the name of The Beatles' primary drummer", 
+                value: 200,
                 answer: "Ringo Starr",
                 categoryId: 5
             },
             {
-                questionText: "Who wrote the song Yesterday", 
-                difficulty: "medium",
+                question: "Who wrote the song Yesterday", 
+                value: 600,
                 answer: "Paul McCartney",
                 categoryId: 5
             },
             {
-                questionText: "On what album is the song Love Me Do", 
-                difficulty: "medium",
+                question: "On what album is the song Love Me Do", 
+                value: 800,
                 answer: "Please Please Me",
                 categoryId: 5
             },
             {
-                questionText: "Which love of John Lennon's is credited with breaking up The Beatles", 
-                difficulty: "easy",
+                question: "Which love of John Lennon's is credited with breaking up The Beatles", 
+                value: 400,
                 answer: "Yoko Ono",
                 categoryId: 5
             },
             {
-                questionText: "Where is there a barber showing photographs?", 
-                difficulty: "hard",
+                question: "Where is there a barber showing photographs?", 
+                value: 1000,
                 answer: "Penny Lane",
                 categoryId: 5
             },
             {
-                questionText: "What is the name of Cersei Lannister's first born son?", 
-                difficulty: "easy",
+                question: "What is the name of Cersei Lannister's first born son?", 
+                value: 200,
                 answer: "Joffrey",
                 categoryId: 2
             },
             {
-                questionText: "When the television show starts, who is the ruler of the seven kingdoms?", 
-                difficulty: "easy",
+                question: "When the television show starts, who is the ruler of the seven kingdoms?", 
+                value: 400,
                 answer: "Robert Baratheon",
                 categoryId: 2
             },
             {
-                questionText: "What is the name of the master of coin in the early seasons of the show?", 
-                difficulty: "medium",
+                question: "What is the name of the master of coin in the early seasons of the show?", 
+                value: 600,
                 answer: "Petyr Baelish",
                 categoryId: 2
             },
             {
-                questionText: "What is the name of Robert Baratheon's bastard son who works in a blacksmith when we first meet him?", 
-                difficulty: "medium",
+                question: "What is the name of Robert Baratheon's bastard son who works in a blacksmith when we first meet him?", 
+                value: 800,
                 answer: "Gendry",
                 categoryId: 2
             },
             {
-                questionText: "Who gives Arya the iron coin of the Faceless Men?", 
-                difficulty: "hard",
+                question: "Who gives Arya the iron coin of the Faceless Men?", 
+                value: 1000,
                 answer: "Jaqen H'Ghar",
                 categoryId: 2
             },
             {
-                questionText: "Where did Kevin Durant go to school?", 
-                difficulty: "easy",
+                question: "Where did Kevin Durant go to school?", 
+                value: 200,
                 answer: "Texas",
                 categoryId: 3
             },
             {
-                questionText: "Where did Anthony Davis go to school?", 
-                difficulty: "easy",
+                question: "Where did Anthony Davis go to school?", 
+                value: 400,
                 answer: "Kentucky",
                 categoryId: 3
             },
             {
-                questionText: "Where did Hakeem Olajuwon go to school?", 
-                difficulty: "medium",
+                question: "Where did Hakeem Olajuwon go to school?", 
+                value: 600,
                 answer: "Houston",
                 categoryId: 3
             },
             {
-                questionText: "Where did Shaquille O'Neal go to school?", 
-                difficulty: "medium",
+                question: "Where did Shaquille O'Neal go to school?", 
+                value: 800,
                 answer: "LSU",
                 categoryId: 3
             },
             {
-                questionText: "Where did Ja Morant go to school?", 
-                difficulty: "hard",
+                question: "Where did Ja Morant go to school?", 
+                value: 1000,
                 answer: "Murray State",
                 categoryId: 3
             },
             {
-                questionText: "Who quarterbacked the Atlanta Falcons to their most recent Super Bowl appearance?", 
-                difficulty: "easy",
+                question: "Who quarterbacked the Atlanta Falcons to their most recent Super Bowl appearance?", 
+                value: 200,
                 answer: "Matt Ryan",
                 categoryId: 4
             },
             {
-                questionText: "Who was the starting QB of the Denver Broncos in their most recent Super Bowl victory?", 
-                difficulty: "easy",
+                question: "Who was the starting QB of the Denver Broncos in their most recent Super Bowl victory?", 
+                value: 400,
                 answer: "Peyton Manning",
                 categoryId: 4
             },
             {
-                questionText: "This New York Jets QB lead the Jets to two straight AFC Championship games from 2010-2011?", 
-                difficulty: "medium",
+                question: "This New York Jets QB lead the Jets to two straight AFC Championship games from 2010-2011?", 
+                value: 600,
                 answer: "Mark Sanchez",
                 categoryId: 4
             },
             {
-                questionText: "This quarterback's injury in 2001 gave Tom Brady his first chance to start in the NFL?", 
-                difficulty: "medium",
+                question: "This quarterback's injury in 2001 gave Tom Brady his first chance to start in the NFL?", 
+                value: 800,
                 answer: "Drew Bledsoe",
                 categoryId: 4
             },
             {
-                questionText: "Which Houston Texan's QB holds the NFL record for most consecutive games with a pick-six?", 
-                difficulty: "hard",
+                question: "Which Houston Texans QB holds the NFL record for most consecutive games with a pick-six?", 
+                value: 1000,
                 answer: "Matt Schaub",
                 categoryId: 4
             },
             {
-                questionText: "What is the name of the Train Station attached to the TD Garden?", 
-                difficulty: "easy",
+                question: "What is the name of the Train Station attached to the TD Garden?", 
+                value: 200,
                 answer: "North Station",
                 categoryId: 6
             },
             {
-                questionText: "What is the name of the oldest park in Boston?", 
-                difficulty: "easy",
+                question: "What is the name of the oldest park in Boston?", 
+                value: 400,
                 answer: "Boston Common",
                 categoryId: 6
             },
             {
-                questionText: "What is the tallest building in Boston?", 
-                difficulty: "medium",
+                question: "What is the tallest building in Boston?", 
+                value: 600,
                 answer: "John Hancock Tower",
                 categoryId: 6
             },
             {
-                questionText: "What was the name of the Celtics stadium prior to it being re-named to the TD Garden?", 
-                difficulty: "medium",
+                question: "What was the name of the Celtics stadium prior to it being re-named to the TD Garden?", 
+                value: 800,
                 answer: "Fleet Center",
                 categoryId: 6
             },
             {
-                questionText: "Where is Paul Revere buried?", 
-                difficulty: "hard",
+                question: "Where is Paul Revere buried?", 
+                value: 1000,
                 answer: "Granary Burial Ground",
                 categoryId: 6
             },
 
         ]
         for (const singleQuestionData of questionsData) {
-            const currentQuestion = await Question.query().findOne({ questionText: singleQuestionData.questionText })
+            const currentQuestion = await Clue.query().findOne({ question: singleQuestionData.question })
             if(!currentQuestion){
-                await Question.query().insert(singleQuestionData)
+                await Clue.query().insert(singleQuestionData)
             }
         }
     }
