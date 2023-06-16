@@ -10,7 +10,7 @@ import TopBar from "./layout/TopBar";
 import HomePage from "./Homepage";
 import JServiceGameBoard from "./JServiceGameBoard";
 import ProfilePage from "./ProfilePage";
-
+import CustomGameBoard from "./CustomGameBoard";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -35,6 +35,7 @@ const App = (props) => {
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/games/:id" render={(props) => <JServiceGameBoard {...props} user={currentUser}/>}/>
+        <Route exact path="/customGames" render={(props) => <CustomGameBoard {...props} user={currentUser}/>}/>
         <Route exact path="/profiles/:id" render={(props) => <ProfilePage {...props} user={currentUser}/>}/>
       </Switch>
     </Router>
