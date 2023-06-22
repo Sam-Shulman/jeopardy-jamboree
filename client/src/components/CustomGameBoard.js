@@ -1,74 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
+import CategoryTile from "./CategoryTile.js"
+import { Redirect } from "react-router-dom"
 
 const CustomGameBoard = (props) => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-
-  const getCategories = async () => {
-    try {
-      const response = await fetch(`/api/v1/customGames`);
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`;
-        const error = new Error(errorMessage);
-        throw error;
+    const [categories, setCategories] = useState([])
+    const [amountOfAnsweredQuestions, setAmountOfAnsweredQuestions] = useState(0)
+    const gameId = props.match.params.id
+    
+    
+    const getCategories = async () => {
+        try {
+          const response = await fetch(`/api/v1/customGames/${gameId}`)
+          if (!response.ok) {
+            const errorMessage = `${response.status} (${response.statusText})`
+            const error = new Error(errorMessage)
+            throw error
+          }
+          const data = await response.json()
+          console.log(data)
+          setCategories(data.game.categories)
+        } catch (err) {
+          if (
+            err.response &&
+            (err.response.status === 429 ||
+              err.message.includes("categories.map is not a function"))
+          ) {
+            alert(
+              "Cannot create a new game so quickly. Please wait, refresh the home page and try again in 15 seconds."
+            )
+            history.push("/")
+          } else {
+            console.log(`Error in fetch: ${err.message}`)
+          }
+        }
       }
-      const data = await response.json();
-      setCategories(data.categories);
-    } catch (err) {
-      console.log(`Error in fetch: ${err.message}`);
-    }
-  };
 
-  const handleCategoryChange = (event) => {
-    const categoryName = event.target.value;
-    const isChecked = event.target.checked;
+      useEffect(() => {
+        getCategories()
+      }, [])
 
-    if (isChecked && selectedCategories.length >= 6) {
-      return; // Limit the selection to six categories
-    }
-
-    setSelectedCategories((prevSelectedCategories) => {
-      if (isChecked) {
-        return [...prevSelectedCategories, categoryName];
-      } else {
-        return prevSelectedCategories.filter((category) => category !== categoryName);
-      }
-    });
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault()
-  };
-
-  const categoriesList = categories.map((categoryItem) => {
-    return (
-      <li key={categoryItem.id}>
-        <label className="categories-list">
-          <input
-            type="checkbox"
-            value={categoryItem.name}
-            checked={selectedCategories.includes(categoryItem.name)}
-            onChange={handleCategoryChange}
-          />
-          {categoryItem.name}
-        </label>
-      </li>
-    );
-  });
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   return (
-    <div className="categories-list">
-        <h1>Pick Six Categories for Your Game!</h1>
-      <form onSubmit={handleFormSubmit}>
-        <ul>{categoriesList}</ul>
-        <button type="submit">Submit</button>
-      </form>
+    <div className="game-board">
+      {amountOfAnsweredQuestions >= 30 && (
+        <div className="ending-button">
+          <button className="end-game-button" onClick={handleNewGame}>
+            End Game
+          </button>
+        </div>
+      )} Hey!
     </div>
-  );
-};
+  )
+}
 
-export default CustomGameBoard;
+export default CustomGameBoard
