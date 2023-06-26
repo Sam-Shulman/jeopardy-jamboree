@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-
-
+import { Link } from "react-router-dom";
 
 const CategoryChoicePage = (props) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const history = useHistory();
-
+  const [gameId, setGameId] = useState(null);
 
   const getCategories = async () => {
     try {
@@ -34,35 +30,36 @@ const CategoryChoicePage = (props) => {
         }),
         body: JSON.stringify({ categories: selectedCategories })
       });
+
       const data = await response.json();
-      console.log(data)
       const gameId = data.game.id;
-      history.push(`/customGames/${gameId}`);
+      setGameId(gameId);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
+
   const handleCategoryChange = (event) => {
     const categoryId = event.target.id;
     const isChecked = event.target.checked;
     const categoryName = event.target.value;
     const categoryObject = { categoryName, categoryId };
-  
+
     if (isChecked && selectedCategories.length >= 6) {
       return;
     }
-  
+
     setSelectedCategories((prevSelectedCategories) => {
       if (isChecked) {
         // Check if category with the same categoryId already exists
         const categoryExists = prevSelectedCategories.some(
           (category) => category.categoryId === categoryId
         );
-  
+
         if (categoryExists) {
           return prevSelectedCategories;
         }
-  
+
         return [...prevSelectedCategories, categoryObject];
       } else {
         return prevSelectedCategories.filter(
@@ -71,20 +68,21 @@ const CategoryChoicePage = (props) => {
       }
     });
   };
-  
-  
-  
-  
+
   useEffect(() => {
     getCategories();
   }, []);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await createNewGame();
+  };
 
   const categoriesList = categories.map((categoryItem) => {
     const isChecked = selectedCategories.some(
       (category) => category.categoryId === categoryItem.id
     );
-  
+
     return (
       <li key={categoryItem.id}>
         <label className="categories-list">
@@ -100,15 +98,18 @@ const CategoryChoicePage = (props) => {
       </li>
     );
   });
-  
-
 
   return (
     <div className="categories-list">
-        <h1>Pick Six Categories for Your Game!</h1>
-      <form onSubmit={createNewGame}>
+      <h1>Pick Six Categories for Your Game!</h1>
+      <form onSubmit={handleSubmit}>
         <ul>{categoriesList}</ul>
-        <button type="submit">Submit</button>
+        {gameId && (
+          <Link to={`/customGames/${gameId}`}>
+            <button type="submit">Go to Game</button>
+          </Link>
+        )}
+        {!gameId && <button type="submit">Submit</button>}
       </form>
     </div>
   );

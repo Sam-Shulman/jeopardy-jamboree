@@ -19,48 +19,56 @@ customGamesRouter.get("/", async (req,res) => {
 
 customGamesRouter.post("/", async (req, res) => {
     const { categories } = req.body;
-    console.log(categories)
     const userId = req.user.id;
-    const categoryIDs =[]
-    categories.forEach((category)=> {
-        categoryIDs.push(category.categoryId)
-    })
-    console.log(categoryIDs)
-  
+    // const categoryIDs =[]
+    // categories.forEach((category)=> {
+    //     categoryIDs.push(category.categoryId)
+    // })
     try {
-      const postGame = await Game.query().insertAndFetch({ userId: userId });
-  
-      const gameClues = [];
-      for (const categoryId of categoryIDs) {
-        const clues = await Clue.query().where('categoryId', categoryId);
-        for (const clue of clues) {
-          const gameClue = await GameClue.query().insertAndFetch({
-            gameId: postGame.id,
-            clueId: clue.id
-          });
-          gameClues.push(gameClue);
+        const postGame = await Game.query().insertAndFetch({ userId: userId });
+      
+        const gameClues = [];
+        for (const category of categories) {
+          const relatedCategory = await Category.query().findById(category.categoryId).withGraphFetched('clues');
+          const relatedClues = relatedCategory.clues;
+          for (const clue of relatedClues) {
+            const gameClue = await GameClue.query().insertAndFetch({
+              gameId: postGame.id,
+              clueId: clue.id
+            });
+            gameClues.push(gameClue);
+          }
         }
+      
+        console.log(gameClues);
+      
+        return res.status(201).json({ game: postGame });
+      } catch (err) {
+        return res.status(500).json({ errors: err });
+      }
+  });
+  
+  
+
+  customGamesRouter.get("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const showGame = await Game.query().findById(id);
+  
+      const gameCategories = [];
+      for (const gameClue of showGame.gameClues) {
+        const clue = await Clue.query().findById(gameClue.clueId);
+        const category = await Category.query().findById(clue.categoryId);
+        const categoryClues = await Clue.query().where('categoryId', category.id);
+        gameCategories.push({ category, clues: categoryClues });
       }
   
-      console.log(gameClues.length);
-  
-      return res.status(201).json({ game: postGame });
+      return res.status(200).json({ game: showGame, categories: gameCategories });
     } catch (err) {
       return res.status(500).json({ errors: err });
     }
   });
   
-  
 
-customGamesRouter.get("/:id", async (req, res) => {
-    const { id } = req.params
-    try {
-      const showGame = await Game.query().findById(id)
-      
-      return res.status(200).json({ game: showGame })
-    } catch (err) {
-      return res.status(500).json({ errors: err })
-    }
-  })
 
 export default customGamesRouter

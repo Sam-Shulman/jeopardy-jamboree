@@ -19,22 +19,13 @@ const CustomGameBoard = (props) => {
           }
           const data = await response.json()
           console.log(data)
-          setCategories(data.game.categories)
+          setCategories(data.categories)
         } catch (err) {
-          if (
-            err.response &&
-            (err.response.status === 429 ||
-              err.message.includes("categories.map is not a function"))
-          ) {
-            alert(
-              "Cannot create a new game so quickly. Please wait, refresh the home page and try again in 15 seconds."
-            )
-            history.push("/")
-          } else {
             console.log(`Error in fetch: ${err.message}`)
           }
-        }
       }
+
+      console.log(categories)
 
       useEffect(() => {
         getCategories()
@@ -45,7 +36,7 @@ const CustomGameBoard = (props) => {
     <div className="game-board">
       {amountOfAnsweredQuestions >= 30 && (
         <div className="ending-button">
-          <button className="end-game-button" onClick={handleNewGame}>
+          <button className="end-game-button" >
             End Game
           </button>
         </div>
