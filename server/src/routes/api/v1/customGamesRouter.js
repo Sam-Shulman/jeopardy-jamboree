@@ -54,20 +54,26 @@ customGamesRouter.post("/", async (req, res) => {
     const { id } = req.params;
     try {
       const showGame = await Game.query().findById(id);
-  
+      const gameClues = await showGame.$relatedQuery("gameClues");
       const gameCategories = [];
-      for (const gameClue of showGame.gameClues) {
+      for (const gameClue of gameClues) {
         const clue = await Clue.query().findById(gameClue.clueId);
         const category = await Category.query().findById(clue.categoryId);
         const categoryClues = await Clue.query().where('categoryId', category.id);
         gameCategories.push({ category, clues: categoryClues });
       }
   
-      return res.status(200).json({ game: showGame, categories: gameCategories });
+      const selectedCategories = [];
+      for (let i = 0; i < gameCategories.length; i += 5) {
+        selectedCategories.push(gameCategories[i]);
+      }
+  
+      return res.status(200).json({ game: showGame, categories: selectedCategories });
     } catch (err) {
       return res.status(500).json({ errors: err });
     }
   });
+  
   
 
 
