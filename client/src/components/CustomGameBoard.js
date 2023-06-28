@@ -49,7 +49,7 @@ const CustomGameBoard = (props) => {
       const addScore = async (value) => {
         try {
           if (value && value > 0) {
-            const response = await fetch(`/api/v1/games/${gameId}`, {
+            const response = await fetch(`/api/v1/customGames/${gameId}`, {
               method: "PATCH",
               headers: new Headers({
                 "Content-Type": "application/json"

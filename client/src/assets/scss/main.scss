@@ -333,6 +333,11 @@ html, body {
 .profile-link a:hover{
   color: #6d5fe9;
 }
-.categories-list{
+.dropdown{
   color: #eeedf7;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
 }
