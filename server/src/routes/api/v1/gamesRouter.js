@@ -29,6 +29,7 @@ gamesRouter.get("/:id", limiter, async (req, res) => {
   try {
     const showGame = await Game.query().findById(id)
     const showGameWithCategories = await GameSerializer.getSummary(showGame)
+    
     return res.status(200).json({ game: showGameWithCategories })
   } catch (err) {
     return res.status(500).json({ errors: err })

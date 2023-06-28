@@ -34,8 +34,8 @@ const TopBar = ({ user }) => {
           </li>
           {user && userId && (
             <li className="profile-link">
-              <Link className="profile-text" to={`/profiles/${userId}`}>
-                Profile
+              <Link className="profile-text" to={`/customGames`}>
+                Play A Custom Game
               </Link>
             </li>
           )}

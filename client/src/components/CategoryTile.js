@@ -151,9 +151,12 @@ const CategoryTile = (props) => {
   }
 
   const renderQuestionBlocks = () => {
-    return questions.map((question, index) => {
-      const answerCorrect = isAnswerCorrect[index]
-      const isAnswered = answerCorrect !== undefined
+    // Sort the questions array by value in ascending order
+    const sortedQuestions = questions.sort((a, b) => a.value - b.value);
+  
+    return sortedQuestions.map((question, index) => {
+      const answerCorrect = isAnswerCorrect[index];
+      const isAnswered = answerCorrect !== undefined;
       return (
         <div
           key={question.id}
@@ -162,9 +165,9 @@ const CategoryTile = (props) => {
         >
           <p className="question-text">{isAnswered ? "" : question.value}</p>
         </div>
-      )
-    })
-  }
+      );
+    });
+  };
   const capitalizeEachWord = (str) => {
     return str
       .split(" ")
