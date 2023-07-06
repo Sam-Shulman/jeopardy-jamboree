@@ -106,7 +106,7 @@ const JServiceGameBoard = (props) => {
           {categories.map((category) => (
             <CategoryTile
               key={category.id}
-              name={category.category}
+              name={category.category || category.name}
               questions={category.clues}
               gameId={gameId}
               addScore={addScore}

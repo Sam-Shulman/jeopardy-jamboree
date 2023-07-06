@@ -2,6 +2,8 @@ import express from "express"
 import { Game } from "../../../models/index.js"
 import GameSerializer from "../../../serializers/GameSerializer.js"
 import rateLimit from "express-rate-limit"
+import { Category} from "../../../models/index.js"
+import getRandomCategoryId from "../../../../services/randomCategoryGenerator.js"
 
 const gamesRouter = new express.Router()
 
@@ -29,6 +31,18 @@ gamesRouter.get("/:id", limiter, async (req, res) => {
   try {
     const showGame = await Game.query().findById(id)
     const showGameWithCategories = await GameSerializer.getSummary(showGame)
+    const categoryLengthCheck = showGameWithCategories.categories.length
+    const properCategoryLength = 6
+    if(categoryLengthCheck < properCategoryLength){
+      const differenceInLength = properCategoryLength - categoryLengthCheck
+      for (let i = 1; i <= differenceInLength; i++){
+        const randomCategoryId = await getRandomCategoryId()
+        const addCategory = await Category.query().findById(randomCategoryId)
+        const fullyAddedCategories = await addCategory.$relatedQuery("clues")
+        addCategory.clues = fullyAddedCategories
+        showGameWithCategories.categories.push(addCategory)
+         }
+        }
     return res.status(200).json({ game: showGameWithCategories })
   } catch (err) {
     return res.status(500).json({ errors: err })
@@ -41,7 +55,7 @@ gamesRouter.patch("/:id", async (req, res) => {
   const { score } = req.body
   try { 
     const game = await Game.query().findById(id)
-    const updatedScore = game.score + score
+    const updatedScore = game.score + parseInt(score)
     const updatedGame =  await Game.query().patchAndFetchById( id, { score: updatedScore })
     return res.status(201).json({ game: updatedGame })
   } catch (err) {

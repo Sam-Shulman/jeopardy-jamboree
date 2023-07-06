@@ -41,7 +41,6 @@ const CategoryChoicePage = (props) => {
       })
 
       const data = await response.json()
-      console.log(data.errors)
       const gameId = data.game.id
       setGameId(gameId)
     } catch (error) {
@@ -57,7 +56,7 @@ const CategoryChoicePage = (props) => {
 
     setSelectedCategories(selected.slice(0, 6))
   }
-  console.log(selectedCategories)
+
 
   const capitalizeEachWord = (str) => {
     return str
