@@ -18,25 +18,43 @@ customGamesRouter.get("/", async (req,res) => {
 customGamesRouter.post("/", async (req, res) => {
   const { categories } = req.body
   const userId = req.user.id
-  try {
-    const postGame = await Game.query().insertAndFetch({ userId: userId })
+  const goodClueValues = ['200', '400', '600', '800', '1000'];
+
+    try {
+        const postGame = await Game.query().insertAndFetch({ userId: userId })
+        
+        const gameClues = []
+        const usableClues = []
+        
+        for (const category of categories) {
+            const relatedCategory = await Category.query().findById(category.id).withGraphFetched('clues')
+        
+            const relatedClues = relatedCategory.clues
+           
+            for (const value of goodClueValues) {
+                const usableClue = relatedClues.find((c) => c.value === value);
+                
+                    usableClues.push(usableClue)
+
+                
+            }
+        }
+                console.log(usableClues)
+            for (const clue of usableClues) {
+            const gameClue = await GameClue.query().insertAndFetch({
+                gameId: postGame.id,
+                clueId: clue.id
+            })
+            gameClues.push(gameClue)
+           
+            }   
     
-    const gameClues = []
-    for (const category of categories) {
-      const relatedCategory = await Category.query().findById(category.id).withGraphFetched('clues')
-      const relatedClues = relatedCategory.clues
-      for (const clue of relatedClues) {
-        const gameClue = await GameClue.query().insertAndFetch({
-          gameId: postGame.id,
-          clueId: clue.id
-        })
-        gameClues.push(gameClue)
-      }
+        
+        
+    return res.status(201).json({ game: postGame})
+    } catch (err) {
+        return res.status(500).json({ errors: err })
     }
-    return res.status(201).json({ game: postGame })
-  } catch (err) {
-    return res.status(500).json({ errors: err })
-  }
 })
 
 customGamesRouter.get("/:id", async (req, res) => {
@@ -48,15 +66,16 @@ customGamesRouter.get("/:id", async (req, res) => {
     for (const gameClue of gameClues) {
       const clue = await Clue.query().findById(gameClue.clueId)
       const category = await Category.query().findById(clue.categoryId)
-      const categoryClues = await Clue.query().where('categoryId', category.id)
-      gameCategories.push({ category, clues: categoryClues })
+    //   const categoryClues = await Clue.query().where('categoryId', category.id)
+      gameCategories.push({ category, clues: clue })
     }
+    //console.log(gameCategories)
 
     const selectedCategories = []
     for (let i = 0; i < gameCategories.length; i += 5) {
       selectedCategories.push(gameCategories[i])
     }
-
+    //console.log(selectedCategories)
     return res.status(200).json({ game: showGame, categories: selectedCategories })
   } catch (err) {
     return res.status(500).json({ errors: err })

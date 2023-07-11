@@ -21,7 +21,6 @@ const JServiceGameBoard = (props) => {
         throw error
       }
       const data = await response.json()
-      console.log(data)
       setCategories(data.game.categories)
       setLoading(false)
     } catch (err) {
