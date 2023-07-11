@@ -25,7 +25,7 @@ const CustomGameBoard = (props) => {
             console.log(`Error in fetch: ${err.message}`)
             }
     }
-    console.log(categories)
+
 
 
       useEffect(() => {
