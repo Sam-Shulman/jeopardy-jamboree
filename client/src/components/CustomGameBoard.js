@@ -12,20 +12,20 @@ const CustomGameBoard = (props) => {
     
     const getCategories = async () => {
         try {
-          const response = await fetch(`/api/v1/customGames/${gameId}`)
-          if (!response.ok) {
+            const response = await fetch(`/api/v1/customGames/${gameId}`)
+            if (!response.ok) {
             const errorMessage = `${response.status} (${response.statusText})`
             const error = new Error(errorMessage)
             throw error
-          }
-          const data = await response.json()
-          setCategories(data.categories)
-          setLoading(false)
+            }
+            const data = await response.json()
+            setCategories(data.categories)
+            setLoading(false)
         } catch (err) {
             console.log(`Error in fetch: ${err.message}`)
-          }
-      }
-      console.log(categories)
+            }
+    }
+    console.log(categories)
 
 
       useEffect(() => {
@@ -90,8 +90,8 @@ const CustomGameBoard = (props) => {
     <div className="categories-row grid-x">
       {categories.map((category) => (
         <CategoryTile
-          key={category.category.id}
-          name={category.category.name}
+          key={category.id}
+          name={category.name}
           questions={category.clues}
           gameId={gameId}
           addScore={addScore}

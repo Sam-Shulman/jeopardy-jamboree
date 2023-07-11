@@ -39,7 +39,7 @@ customGamesRouter.post("/", async (req, res) => {
                 
             }
         }
-                console.log(usableClues)
+            
             for (const clue of usableClues) {
             const gameClue = await GameClue.query().insertAndFetch({
                 gameId: postGame.id,
@@ -48,7 +48,7 @@ customGamesRouter.post("/", async (req, res) => {
             gameClues.push(gameClue)
            
             }   
-    
+  
         
         
     return res.status(201).json({ game: postGame})
@@ -63,20 +63,28 @@ customGamesRouter.get("/:id", async (req, res) => {
     const showGame = await Game.query().findById(id)
     const gameClues = await showGame.$relatedQuery("gameClues")
     const gameCategories = []
+    const categoryIds = []
     for (const gameClue of gameClues) {
-      const clue = await Clue.query().findById(gameClue.clueId)
-      const category = await Category.query().findById(clue.categoryId)
-    //   const categoryClues = await Clue.query().where('categoryId', category.id)
-      gameCategories.push({ category, clues: clue })
+        const clue = await Clue.query().findById(gameClue.clueId)
+        if (!categoryIds.includes(clue.categoryId)) {
+            categoryIds.push(clue.categoryId)
+        }
     }
-    //console.log(gameCategories)
+    for (const id of categoryIds) {
+        const category = await Category.query().findById(id)
+        category.clues = []
+        for (const gameClue of gameClues) {
+            const clue = await Clue.query().findById(gameClue.clueId)
+            if (clue.categoryId === id) {
+                category.clues.push(clue)
+            }
+        }
+        gameCategories.push(category)
+    }
+    
+    console.log(gameCategories)
 
-    const selectedCategories = []
-    for (let i = 0; i < gameCategories.length; i += 5) {
-      selectedCategories.push(gameCategories[i])
-    }
-    //console.log(selectedCategories)
-    return res.status(200).json({ game: showGame, categories: selectedCategories })
+    return res.status(200).json({ game: showGame, categories: gameCategories})
   } catch (err) {
     return res.status(500).json({ errors: err })
   }
